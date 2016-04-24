@@ -1,6 +1,13 @@
 ﻿<?php
 
-include_once 'database/MysqliDB.php';
+@session_start();
+
+if(!defined('ROOT_PATH')) {
+    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+}
+
+include ROOT_PATH . 'includes/MysqliDB.php';
+include ROOT_PATH .'includes/functions.php';
 
 $db = new MysqliDb ([
     'host' => 'localhost',
@@ -11,24 +18,24 @@ $db = new MysqliDb ([
     'prefix' => '',
     'charset' => 'utf8']);
 
+$lang = getActiveLanguage();
+$consts = include 'lang/' . $lang . '.php';
 
-@session_start();
+$about_us = getAboutUsContent($db, $lang);
+$consts['aboutUs'] = $about_us;
 
-$lang = 'srb';
-$allowed_langs = ['sk', 'en', 'srb'];
+$members = getMembersContent($db, $lang);
+$consts['members'] = $members;
 
-if(isset($_GET['lang']) && $_GET['lang'] !== '') {
-    $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
+$projects = getProjectsContent($db, $lang);
+$consts['projects'] = $projects;
 
-    if(!in_array($lang, $allowed_langs)) {
-        $lang = 'srb'; 
-    }
+require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
+Twig_Autoloader::register();
 
-    $_SESSION['USER_DATA']['lang'] = $lang;
-} else {
-    if(isset($_SESSION['USER_DATA']['lang']) && in_array($_SESSION['USER_DATA']['lang'], $allowed_langs)) {
-        $lang = $_SESSION['USER_DATA']['lang'];
-    }
-}
-	 
-include_once 'lang/' . $lang . '.php';	
+$loader = new Twig_Loader_Filesystem(ROOT_PATH .'views/');
+$twig = new Twig_Environment($loader, array(
+    'debug' => true,
+    'autoreload' => true
+));
+$twig->addExtension(new Twig_Extension_Debug());
