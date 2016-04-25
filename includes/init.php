@@ -3,20 +3,14 @@
 @session_start();
 
 if(!defined('ROOT_PATH')) {
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    define('ROOT_PATH', 'C:/server/htdocs/kreatornica/');
 }
 
-include ROOT_PATH . 'includes/MysqliDB.php';
-include ROOT_PATH .'includes/functions.php';
+use voku\db\DB;
 
-$db = new MysqliDb ([
-    'host' => 'localhost',
-    'username' => 'kreatorci', 
-    'password' => 'QPHTUvRKzqWEU8aZ',
-    'db'=> 'kreatornica',
-    'port' => 3306,
-    'prefix' => '',
-    'charset' => 'utf8']);
+require ROOT_PATH .'vendor/autoload.php';
+
+$db = DB::getInstance('localhost', 'kreatorci', 'QPHTUvRKzqWEU8aZ', 'kreatornica');
 
 $lang = getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';

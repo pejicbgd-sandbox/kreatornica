@@ -45,7 +45,7 @@
 								 <div class="form-group">
 									<label class="control-label col-sm-2">Unesi tekst: </label>
 										 <div class="col-sm-10">
-											 <textarea class="form-control ckeditor" name="editor1" rows="6"></textarea>
+											 <textarea class="form-control ckeditor" name="editor1" rows="6"><?php echo $about_us; ?></textarea>
 												</div>
 										    </div>
 										</form>
@@ -53,7 +53,8 @@
 								</div>
 							</section>
 						</div>
+						<button class="btn btn-primary" type="submit">Ažuriraj sekciju</button>
 </div>
 
-<button class="btn btn-primary" type="submit">Ažuriraj sekciju</button>
+
 

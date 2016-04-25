@@ -1,3 +1,5 @@
+<?php include "helper.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -424,22 +426,9 @@
       </section>
       <!--main content end-->
   </section>
-  
- 
-  
-  
-     
-
-   
-
-    <!-- javascripts -->  
-	
     <script src="js/jquery.js"></script>
-	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="js/jquery-ui-1.10.4.min.js"></script> 
-   	   	
-    <!--<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>-->
-	
+   	   		
     <!-- bootstrap -->
     <script src="js/bootstrap.min.js"></script>
 	
@@ -447,13 +436,6 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
 	
-	<!--JQUERY UPLOAD IMAGES--->
-   
-  
-	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included--> 
-	<script src="file-upload-9.11.2/js/vendor/jquery.ui.widget.js"></script>
-	<!-- The Templates plugin is included to render the upload/download listings -->
-	<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
 	<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
 	<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
 	<!-- The Canvas to Blob plugin is included for image resizing functionality -->
@@ -462,177 +444,16 @@
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 	<!-- blueimp Gallery script -->	
 	<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-	<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-	<script src="file-upload-9.11.2/js/jquery.iframe-transport.js"></script>
-	<!-- The basic File Upload plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload.js"></script>
-	<!-- The File Upload processing plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload-process.js"></script>
-	<!-- The File Upload image preview & resize plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload-image.js"></script>
-	<!-- The File Upload audio preview plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload-audio.js"></script>
-	<!-- The File Upload video preview plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload-video.js"></script>
-	<!-- The File Upload validation plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload-validate.js"></script>
-	<!-- The File Upload user interface plugin -->
-	<script src="file-upload-9.11.2/js/jquery.fileupload-ui.js"></script>
-	<!-- The main application script -->
-	<script src="file-upload-9.11.2/js/main.js"></script>
-	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
-	<!--[if (gte IE 8)&(lt IE 10)]>
-	<script src="js/cors/jquery.xdr-transport.js"></script>
-	<![endif]-->  
-	 
-    <!-- charts scripts -->
-    <script src="assets/jquery-knob/js/jquery.knob.js"></script>
+	
     <script src="js/jquery.sparkline.js" type="text/javascript"></script>
     <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="js/owl.carousel.js" ></script>
-    <!-- jQuery full calendar -->
-	
-    <script src="js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-	<script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-	
-    <!--script for this page only
-    <script src="js/calendar-custom.js"></script>
-	<script src="js/jquery.rateit.min.js"></script>-->
-    <!-- custom select 
-    <script src="js/jquery.customSelect.min.js" ></script>
-	<script src="assets/chart-master/Chart.js"></script>-->
-	
-	
-
-	
-   
-   
-	
-	<!---dATE PICKER CUSTOM---->
-	<!--<script src="js/date.js"></script>-->
-	
-    <!-- custom script for this page
-    <script src="js/sparkline-chart.js"></script>
-    <script src="js/easy-pie-chart.js"></script>
-	<script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="js/jquery-jvectormap-world-mill-en.js"></script>
-	<script src="js/xcharts.min.js"></script>
-	<script src="js/jquery.autosize.min.js"></script>
-	<script src="js/jquery.placeholder.min.js"></script>
-	<script src="js/gdp-data.js"></script>	
-	<script src="js/morris.min.js"></script>
-	<script src="js/sparklines.js"></script>	
-	<script src="js/charts.js"></script>-->
 	<script src="js/jquery.slimscroll.min.js"></script>
-	 <!--custom script for all page-->
     <script src="js/scripts.js"></script>
-	
-    <script src="//knockoutjs.com/downloads/knockout-3.4.0.js"></script>
-	
-  <script>
-function Member (data){
-   var self = this;
-   data = data || {};
-   
-   self.name = ko.observable(data.name || 'Ime i Prezime');
-   self.entryDate = ko.observable(data.entryDate || new Date().toLocaleDateString());
-   self.bio = ko.observable(data.bio || 'Unesite tekst!');
-   self.eMail = ko.observable(data.eMail || 'Unesite e-mail adresu');
-   self.phone = ko.observable(data.phone || 'Unesite broj telefona');
-   
-};
-
-function MemberViewModel(){
-   var self = this;
-   self.members = ko.observableArray([]);
-   self.memberToEdit = ko.observable();
-  
-
-   self.addMember = function(){
-       self.members.push(new Member());  
-   } 
-   
-   self.removeMember = function(member){
-       self.members.remove(member);   
-   }
-   
-   self.add = function(member){
-     self.memberToEdit.push(data); 
-   }
-   
-   self.editMember = function(member){
-   self.memberToEdit(member);
-   }
-   
-   var memberToEdit = function (data){
-      self.data = ko.observable("");
-	  self.members = ko.observableArray();
-	  self.member.data;   
-   }; 
-   
-     
-};
-
-ko.options.useOnlyNativeEvents = true;
-
-ko.applyBindings(new MemberViewModel());
-
-</script>
-
-
-	
-  <!--<script>
-
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw' : function () { 
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-
-      //carousel
-      $(document).ready(function() {
-          $("#owl-slider").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true
-
-          });
-      });
-
-      //custom select box
-
-      $(function(){
-          $('select.styled').customSelect();
-      });
-	  
-	  /* ---------- Map ---------- */
-	$(function(){
-	  $('#map').vectorMap({
-	    map: 'world_mill_en',
-	    series: {
-	      regions: [{
-	        values: gdpData,
-	        scale: ['#000', '#000'],
-	        normalizeFunction: 'polynomial'
-	      }]
-	    },
-		backgroundColor: '#eef3f7',
-	    onLabelShow: function(e, el, code){
-	      el.html(el.html()+' (GDP - '+gdpData[code]+')');
-	    }
-	  });
-	});
-  </script>-->
-  
- 
-  
- 
-
-
-
+	<script>
+        var viewData = {
+            aboutUs: "<?php echo $about_us; ?>"
+        };    
+    </script>
+    <<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js" type="text/javascript" charset="utf-8" async defer></script>
   </body>
 </html>
