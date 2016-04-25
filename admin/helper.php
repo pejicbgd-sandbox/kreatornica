@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
             echo json_encode($consts); die;
         }
     } else {
-        $consts = returnBulked($db, 'srb');
+        $consts = returnBulked($db, 'sr');
     }
 }
 
@@ -45,12 +45,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($action == 'saveAboutUs') {
             $lang = filter_var($_POST['lang'], FILTER_SANITIZE_STRING);
-            if(!in_array($lang, ['srb', 'sk', 'eng'])) {
+            if(!in_array($lang, ['sr', 'sk', 'en'])) {
                 echo 'error'; die;
             }
             $where['lang'] = $lang;
-            $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
-            $db->update('about', $data, $where);
+            $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+            $subtitle = filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING);
+            $text = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
+
+            $data = array(
+                'title' => $title,
+                'subtitle' => $subtitle,
+                'text' => $text
+            );
+
+            $result = $db->update('about', $data, $where);
+            echo $result; die;
         }
     }
 }

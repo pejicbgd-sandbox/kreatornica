@@ -15,7 +15,7 @@
             var $holder = $('#about-form');
             $holder.find('#title').val(encodeEntities(response['aboutUsTitle']));
             $holder.find('#subtitle').val(encodeEntities(response['aboutUsSubtitle']));
-            $('#about-text').text(encodeEntities(response['aboutUs']));
+            $('#about-text').val(encodeEntities(response['aboutUs']));
         });
     });
 
@@ -26,7 +26,7 @@
                 action: 'saveAboutUs',
                 title: $holder.find('#title').val(),
                 subtitle: $holder.find('#subtitle').val(),
-                text: $('#about-text').html(),
+                text: $('#about-text').val(),
                 lang: $holder.find('#language-chooser').val()
         };
 
@@ -36,7 +36,7 @@
             dataType: "JSON",
             data: info
         }).done(function(response) {
-            alert(response);
+
         });
     });
 })(jQuery);

@@ -1,8 +1,8 @@
 ﻿<?php
 
 function getActiveLanguage(){
-    $lang = 'srb';
-    $allowed_langs = ['sk', 'en', ''];
+    $lang = 'sr';
+    $allowed_langs = ['sk', 'en', 'sr'];
 
     if(isset($_GET['lang']) && $_GET['lang'] !== '') {
         $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
@@ -34,6 +34,9 @@ function getMembersContent($db, $lang) {
         $members[$i]['name'] = $temp[0]->member_name;
         $members[$i]['text'] = $temp[0]->{'text_' .$lang};
         $members[$i]['img'] = $temp[0]->member_img;
+        $members[$i]['created_date'] = gmdate('d-m-Y', $temp[0]->created_date);
+        $members[$i]['email'] = $temp[0]->email;
+        $members[$i]['telefon'] = $temp[0]->telefon;
     }
     return $members;
 }

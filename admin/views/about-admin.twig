@@ -11,22 +11,21 @@
     <div class="panel-body">
         <form class="form-horizontal" action="" method="post" id="about-form">
             <div class="form-group">
-
                 <label class="control-label col-lg-2" for="inputSuccess">Izaberi jezik: </label>
                 <div class="col-lg-10">
                     <select class="form-control m-bot15" id="language-chooser">
-                        <option value="srb">Srpski</option>
+                        <option value="sr">Srpski</option>
                         <option value="sk">Slovački</option>
                         <option value="en">Engleski</option>
                     </select>
-
-                    <label class="control-label col-lg-2" for="inputSuccess">Izmeni naslov: </label>
-                    <input class="form-control input-lg m-bot15" id="title" type="text" placeholder="Izmeni naslov"
-                           value="{{ aboutUsTitle }}"/>
-                    <label class="control-label col-lg-2" for="inputSuccess">Izmeni podnaslov: </label>
-                    <input class="form-control m-bot15" id="subtitle" type="text" placeholder="Izmeni podnaslov"
-                           value="{{ aboutUsSubtitle }}"/>
-
+                </div>
+                <label class="control-label col-lg-2" for="inputSuccess">Izmeni naslov: </label>
+                <div class="col-lg-10">
+                    <input class="form-control input-lg m-bot15" id="title" type="text" placeholder="Izmeni naslov" value="{{ aboutUsTitle }}"/>
+                </div>
+                <label class="control-label col-lg-2" for="inputSuccess">Izmeni podnaslov: </label>
+                <div class="col-lg-10">
+                    <input class="form-control m-bot15" id="subtitle" type="text" placeholder="Izmeni podnaslov" value="{{ aboutUsSubtitle }}"/>
                 </div>
             </div>
         </form>
@@ -47,7 +46,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">Unesi tekst: </label>
                         <div class="col-sm-10">
-                            <textarea class="form-control ckeditor" name="editor1" rows="10" id="about-text">{{ aboutUs }}</textarea>
+                            <textarea class="form-control" name="editor" rows="10" id="about-text">{{ aboutUs }}</textarea>
                         </div>
                     </div>
                 </div>
