@@ -1,4 +1,5 @@
 <?php require('includes/init.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,7 +111,7 @@
     </footer>
 
     <!-- Project Modals -->
-    
+
     <!-- Project Modal 1 -->
     <div class="portfolio-modal modal fade" id="projectModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
@@ -150,7 +151,8 @@
                                 </a>
 
                                 <div id="fancybox-thumb" class="hidden">
-                                    <a class="fancybox-thumb " rel="fancybox-thumb" href="assets/img/gallery/large/3.jpg"
+                                    <a class="fancybox-thumb " rel="fancybox-thumb"
+                                       href="assets/img/gallery/large/3.jpg"
                                        title="elgol sunset (matty brooks)">
                                         <img src="assets/img/gallery/thumbs/3small.jpg" alt=""/>
                                     </a>
