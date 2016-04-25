@@ -10,7 +10,6 @@ return [
     'LEAD_IN' => 'Welcome!',
     'PAGE_TITLE' => 'Club Kreatornica',
     'BTN' => 'more',
-    'ABOUT_INTRO' => 'About us',
     'ABOUT_SECTION' => ' ',
     'MEMBER_SECTION_INTRO' => '',
     'MEMBER_SECTION' => '',

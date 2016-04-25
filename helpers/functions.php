@@ -2,13 +2,13 @@
 
 function getActiveLanguage(){
     $lang = 'srb';
-    $allowed_langs = ['sk', 'en', 'srb'];
+    $allowed_langs = ['sk', 'en', ''];
 
     if(isset($_GET['lang']) && $_GET['lang'] !== '') {
         $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
 
         if(!in_array($lang, $allowed_langs)) {
-            $lang = 'srb';
+            $lang = 'sr';
         }
 
         $_SESSION['USER_DATA']['lang'] = $lang;
@@ -21,8 +21,9 @@ function getActiveLanguage(){
 }
 
 function getAboutUsContent($db, $lang) {
-    $result = $db->select('about')->fetchAll();
-    return $result[0]->{'text_' .$lang};
+    $where = ['lang' => $lang];
+    $result = $db->select('about', $where)->fetchAll();
+    return [$result[0]->title, $result[0]->subtitle, $result[0]->text];
 }
 
 function getMembersContent($db, $lang) {
@@ -40,4 +41,18 @@ function getMembersContent($db, $lang) {
 function getProjectsContent($db, $lang) {
     $result = $db->select('project_page')->fetchAll();
     return $result[0]->{'text_' .$lang};
+}
+
+function returnBulked($db, $lang) {
+    $about_us = getAboutUsContent($db, $lang);
+    $consts['aboutUsTitle'] = $about_us[0];
+    $consts['aboutUsSubtitle'] = $about_us[1];
+    $consts['aboutUs'] = $about_us[2];
+
+    $members = getMembersContent($db, $lang);
+    $consts['members'] = $members;
+
+    $projects = getProjectsContent($db, $lang);
+    $consts['projects'] = $projects;
+    return $consts;
 }

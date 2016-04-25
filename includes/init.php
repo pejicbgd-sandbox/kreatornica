@@ -3,7 +3,7 @@
 @session_start();
 
 if(!defined('ROOT_PATH')) {
-    define('ROOT_PATH', 'C:/server/htdocs/kreatornica/');
+    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
 use voku\db\DB;
@@ -16,7 +16,9 @@ $lang = getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
 
 $about_us = getAboutUsContent($db, $lang);
-$consts['aboutUs'] = $about_us;
+$consts['aboutUsTitle'] = $about_us[0];
+$consts['aboutUsSubtitle'] = $about_us[1];
+$consts['aboutUs'] = $about_us[2];
 
 $members = getMembersContent($db, $lang);
 $consts['members'] = $members;
@@ -32,4 +34,3 @@ $twig = new Twig_Environment($loader, array(
     'debug' => true,
     'autoreload' => true
 ));
-$twig->addExtension(new Twig_Extension_Debug());
