@@ -4940,3 +4940,10 @@ span.customSelect.changed {
 .customSelectInner {
     background:url(../img/customSelect-arrow.gif) no-repeat center right;
 }
+.member-bio {
+    resize: vertical;
+}
+.loader {
+    display: inline-block;
+    margin-left: 15px;
+}

@@ -1,0 +1,62 @@
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="member-update" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">Izmeni/Ubaci podatke o članu</h4>
+            </div>
+            <div class="modal-body">
+
+                <form role="form" method="post" action="#" enctype="multipart/form-data" id="update-member-form">
+                    <div>
+                        <select class="form-control m-bot15" name="language" id="bio-language">
+                            <option value="sr">Srpski</option>
+                            <option value="sk">Slovački</option>
+                            <option value="en">Engleski</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFullName">Ime i Prezime</label>
+                        <input type="text" class="form-control" id="exampleInputFullName" name="name" placeholder="Ime i Prezime">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail">E-mail</label>
+                        <input type="text" class="form-control" id="exampleInputEmail" name="email" placeholder="E-mail">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPhone">Telefon</label>
+                        <input type="text" class="form-control" id="exampleInputPhone" name="phone" placeholder="Telefon">
+                    </div>
+
+                    <div>
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Izmeni Bografiju
+                            </header>
+                            <div class="panel-body">
+                                <div class="form">
+                                    <div class="form-group">
+                                        <div class="">
+                                            <textarea class="form-control member-bio" name="member-bio" rows="6"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputFile">Unesi sliku</label>
+                        <input type="file" name="image" id="exampleInputFile3" />
+                    </div>
+
+                    <input type="hidden" name="action" value="saveUpdatedMember" />
+                    <input type="hidden" name="member_id" value="" />
+                    <button type="submit" class="btn btn-primary" id="save-member">Pošalji</button><img class="loader hidden" src="{{ ROOT_PATH }}img/ajax-loader.gif" alt="Loading"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

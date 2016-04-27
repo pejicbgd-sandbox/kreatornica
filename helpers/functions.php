@@ -30,7 +30,8 @@ function getMembersContent($db, $lang) {
     $members = [];
     $result = $db->select('member_page')->fetchAll();
     for ($i = 1; $i<= count($result); $i++) {
-        $temp = $db->select('member_page', ['member_id' => $i])->fetchAll();
+        $temp = $db->select('member_page')->fetchAll();
+        $members[$i]['member_id'] = $temp[0]->member_id;
         $members[$i]['name'] = $temp[0]->member_name;
         $members[$i]['text'] = $temp[0]->{'text_' .$lang};
         $members[$i]['img'] = $temp[0]->member_img;
@@ -41,9 +42,22 @@ function getMembersContent($db, $lang) {
     return $members;
 }
 
-function getProjectsContent($db, $lang) {
-    $result = $db->select('project_page')->fetchAll();
-    return $result[0]->{'text_' .$lang};
+function getProjectsContent($db) {
+    $result = $db->select('projects')->fetchAllArray();
+    return $result;
+}
+
+function getProject($db, $project_id, $lang) {
+    $where['project_id'] = $project_id;
+    $result = $db->select('projects', $where)->fetchAllArray();
+
+    $project['project_id'] = $project_id;
+    $project['lang'] = $lang;
+    $project['name'] = $result[0]['project_name'];
+    $project['title'] = $result[0]['title_' .$lang];
+    $project['text'] = $result[0]['text_' .$lang];
+    $project['content'] = $result[0]['content_' .$lang];
+    return $project;
 }
 
 function returnBulked($db, $lang) {
@@ -55,7 +69,7 @@ function returnBulked($db, $lang) {
     $members = getMembersContent($db, $lang);
     $consts['members'] = $members;
 
-    $projects = getProjectsContent($db, $lang);
+    $projects = getProjectsContent($db);
     $consts['projects'] = $projects;
     return $consts;
 }
