@@ -23,8 +23,17 @@ $consts['aboutUs'] = $about_us[2];
 $members = getMembersContent($db, $lang);
 $consts['members'] = $members;
 
-$projects = getProjectsContent($db, $lang);
-$consts['projects'] = $projects;
+$projects = getProjectsContent($db);
+$projectData = [];
+foreach ($projects as $key=>$project) {
+    $projectData[$key]['project_id'] = $project['project_id'];
+    $projectData[$key]['project_name'] = $project['project_name'];
+    $projectData[$key]['title'] = $project['title_' .$lang];
+    $projectData[$key]['text'] = $project['text_' .$lang];
+    $projectData[$key]['content'] = $project['content_' .$lang];
+    $projectData[$key]['image'] = $project['title_img'];
+}
+$consts['projects'] = $projectData;
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();

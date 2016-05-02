@@ -28,16 +28,15 @@ function getAboutUsContent($db, $lang) {
 
 function getMembersContent($db, $lang) {
     $members = [];
-    $result = $db->select('member_page')->fetchAll();
-    for ($i = 1; $i<= count($result); $i++) {
-        $temp = $db->select('member_page')->fetchAll();
-        $members[$i]['member_id'] = $temp[0]->member_id;
-        $members[$i]['name'] = $temp[0]->member_name;
-        $members[$i]['text'] = $temp[0]->{'text_' .$lang};
-        $members[$i]['img'] = $temp[0]->member_img;
-        $members[$i]['created_date'] = gmdate('d-m-Y', $temp[0]->created_date);
-        $members[$i]['email'] = $temp[0]->email;
-        $members[$i]['telefon'] = $temp[0]->telefon;
+    $temp = $db->select('member_page')->fetchAll();
+    for ($i = 0; $i<= count($temp) - 1; $i++) {
+        $members[$i]['member_id'] = $temp[$i]->member_id;
+        $members[$i]['name'] = $temp[$i]->member_name;
+        $members[$i]['text'] = $temp[$i]->{'text_' .$lang};
+        $members[$i]['img'] = $temp[$i]->member_img;
+        $members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]->created_date);
+        $members[$i]['email'] = $temp[$i]->email;
+        $members[$i]['telefon'] = $temp[$i]->telefon;
     }
     return $members;
 }

@@ -411,6 +411,7 @@
         },
         projects: <?php echo json_encode($consts['projects']); ?>,
         projectData: <?php echo json_encode($consts['projectData']); ?>
+        
     };
 </script>
 <script src="js/custom.js"></script>
