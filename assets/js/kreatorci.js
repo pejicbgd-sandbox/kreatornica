@@ -7,26 +7,12 @@
         event.preventDefault();
     });
 
-    $(".fancybox").attr('rel', 'gallery').fancybox({
+    $(".fancybox").fancybox({
        helpers: {
             overlay: {
                 css: {
                     'background': 'rgba(33, 40, 38, 0.7)'
                 }
-            }
-        }
-    });
-
-    $(".fancybox-thumb").fancybox({
-        prevEffect: 'none',
-        nextEffect: 'none',
-        helpers: {
-            title: {
-                type: 'outside'
-            },
-            thumbs: {
-                width: 50,
-                height: 50,
             }
         }
     });

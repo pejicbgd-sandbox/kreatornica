@@ -411,9 +411,10 @@
         },
         projects: <?php echo json_encode($consts['projects']); ?>,
         projectData: <?php echo json_encode($consts['projectData']); ?>
-        
     };
 </script>
-<script src="js/custom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="js/c.js"></script>
+<!--<script src="js/custom.js"></script>-->
 </body>
 </html>

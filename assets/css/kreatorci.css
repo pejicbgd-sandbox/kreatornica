@@ -235,11 +235,11 @@ fieldset[disabled] .btn-xl.active {
     background-color: #fec503;
 }
 
-.language-icons{
+.language-icons {
 	position: relative;
    float: right;
    margin-right: -250px;
-   margin-top: -50px;
+   margin-top: -52px;
   
 }
 .language-icons ul li {
@@ -248,8 +248,32 @@ fieldset[disabled] .btn-xl.active {
  
 }
 
+.logo-img {
+    height: 50px;
+    margin: 15px 0;
+}
 
+.navbar-right {
+    margin-top: 15px;
+}
 
+.list-inline {
+    padding-left: 0;
+    list-style: none;
+    vertical-align: bottom;
+    line-height: 41px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.social-buttons li {
+    margin: 0 auto;
+    width: 100px;
+    display: block;
+}
+
+.quicklinks li a {
+    transition: all 0.18s ease-in;
+}
 
 @media(max-width:768px) {
     .navbar-default {
@@ -296,12 +320,12 @@ fieldset[disabled] .btn-xl.active {
 }
 
 header {
-    
     text-align: center;
     color: #fff;
-    background-attachment: scroll;
     background-image: url(../img/header_unsplash.jpg);
     background-position: center center;
+    height: 100vh;
+    width: 100%;
     background-repeat: none;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -839,12 +863,12 @@ ul.social-buttons li a {
     border-radius: 100%;
     font-size: 20px;
     line-height: 40px;
-    outline: 0;
     color: #fff;
     background-color: #222;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     transition: all .3s;
+    text-indent: 17px;
 }
 
 ul.social-buttons li a:hover,

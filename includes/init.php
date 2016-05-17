@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 @session_start();
 
@@ -14,6 +14,7 @@ $db = DB::getInstance('localhost', 'kreatorci', 'QPHTUvRKzqWEU8aZ', 'kreatornica
 
 $lang = getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
+$consts['rootPath'] = ROOT_PATH;
 
 $about_us = getAboutUsContent($db, $lang);
 $consts['aboutUsTitle'] = $about_us[0];
@@ -34,6 +35,14 @@ foreach ($projects as $key=>$project) {
     $projectData[$key]['image'] = $project['title_img'];
 }
 $consts['projects'] = $projectData;
+
+$galleries = glob(ROOT_PATH .'assets/img/gallery/*' , GLOB_ONLYDIR);
+foreach ($galleries as $key => $value) {
+    $consts['galleries'][$key]['folder'] = str_replace (ROOT_PATH, '', $value);
+    
+    $tempImages = glob($value ."/*.*");
+    $consts['galleries'][$key]['images'] = str_replace (ROOT_PATH, '', $tempImages);
+}
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();

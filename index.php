@@ -15,15 +15,8 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/kreatorci.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/fancybox/jquery.fancybox.css" type="text/css" media="screen"/>
-    <script type="text/javascript" src="assets/fancybox/jquery.fancybox.js"></script>
-
     <link rel="stylesheet" href="assets/fancybox/helpers/jquery.fancybox-buttons.css" type="text/css" media="screen"/>
-    <script type="text/javascript" src="assets/fancybox/helpers/jquery.fancybox-buttons.js"></script>
-
     <link rel="stylesheet" href="assets/fancybox/jquery.fancybox-thumbs.css" type="text/css" media="screen"/>
-    <script type="text/javascript" src="assets/fancybox/jquery.fancybox-thumbs.js"></script>
-    <script type="text/javascript" src="assets/fancybox/jquery.fancybox-media.js"></script>
-
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
@@ -407,6 +400,11 @@
                             <script src="assets/js/classie.js"></script>
                             <script src="assets/js/cbpAnimatedHeader.js"></script>
 
+                            <script type="text/javascript" src="assets/fancybox/jquery.fancybox.js"></script>
+                            <script type="text/javascript" src="assets/fancybox/helpers/jquery.fancybox-buttons.js"></script>
+                            <script type="text/javascript" src="assets/fancybox/jquery.fancybox-thumbs.js"></script>
+                            <script type="text/javascript" src="assets/fancybox/jquery.fancybox-media.js"></script>
+                            
                             <!-- Contact Form JavaScript -->
                             <script src="assets/js/contact_me.js"></script>
                             <script src="assets/js/kreatorci.js"></script>

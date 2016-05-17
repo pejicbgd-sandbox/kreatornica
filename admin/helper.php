@@ -36,6 +36,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     } else {
         $consts = returnBulked($db, 'sr');
+        $consts['projectData'] = null;
     }
 }
 $consts['ROOT_PATH'] = ROOT_PATH;
