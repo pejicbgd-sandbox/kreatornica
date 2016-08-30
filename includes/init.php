@@ -3,14 +3,17 @@
 @session_start();
 
 if(!defined('ROOT_PATH')) {
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    //define('ROOT_PATH', 'http://kreatornica.com');
+    define('ROOT_PATH', 'http://localhost');
 }
 
-use voku\db\DB;
+require ROOT_PATH . '/kreatornica/vendor/autoload.php/';
 
-require ROOT_PATH .'vendor/autoload.php';
+//include '../helpers/iporm/src/DB.php';
 
-$db = DB::getInstance('localhost', 'kreatorci', 'QPHTUvRKzqWEU8aZ', 'kreatornica');
+//$db = DB::getInstance('kreatornica.com', 'kreatorn_admin', 'iuMT?.SPzM5v', 'kreatorn_ica');
+
+$db = new iporm\db\DB('localhost', 'kreatorci', 'shimas3iki', 'kreatornica');
 
 $lang = getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
@@ -39,7 +42,7 @@ $consts['projects'] = $projectData;
 $galleries = glob(ROOT_PATH .'assets/img/gallery/*' , GLOB_ONLYDIR);
 foreach ($galleries as $key => $value) {
     $consts['galleries'][$key]['folder'] = str_replace (ROOT_PATH, '', $value);
-    
+
     $tempImages = glob($value ."/*.*");
     $consts['galleries'][$key]['images'] = str_replace (ROOT_PATH, '', $tempImages);
 }
