@@ -6,8 +6,6 @@ if(!defined('ROOT_PATH')) {
     define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
-use voku\db\DB;
-
 require ROOT_PATH .'vendor/autoload.php';
 
 $db = DB::getInstance('localhost', 'kreatorci', 'QPHTUvRKzqWEU8aZ', 'kreatornica');
