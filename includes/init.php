@@ -7,27 +7,27 @@ if(!defined('ROOT_PATH')) {
     define('ROOT_PATH', 'http://localhost');
 }
 
-require ROOT_PATH . '/kreatornica/vendor/autoload.php/';
 
-//include '../helpers/iporm/src/DB.php';
+require "C:/xampp/htdocs/kreatornica/vendor/autoload.php";
+$config = require "C:/xampp/htdocs/kreatornica/helpers/config.php";
 
 //$db = DB::getInstance('kreatornica.com', 'kreatorn_admin', 'iuMT?.SPzM5v', 'kreatorn_ica');
-
-$db = new iporm\db\DB('localhost', 'kreatorci', 'shimas3iki', 'kreatornica');
 
 $lang = getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
 $consts['rootPath'] = ROOT_PATH;
 
-$about_us = getAboutUsContent($db, $lang);
-$consts['aboutUsTitle'] = $about_us[0];
-$consts['aboutUsSubtitle'] = $about_us[1];
-$consts['aboutUs'] = $about_us[2];
+/*$about_us = getAboutUsContent($lang);
 
-$members = getMembersContent($db, $lang);
+$consts['aboutUsTitle'] = $about_us[0]['title'];
+$consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
+$consts['aboutUs'] = $about_us[0]['text'];*/
+
+$members = getMembersContent($lang);
+var_dump($members); die;
 $consts['members'] = $members;
 
-$projects = getProjectsContent($db);
+$projects = getProjectsContent();
 $projectData = [];
 foreach ($projects as $key=>$project) {
     $projectData[$key]['project_id'] = $project['project_id'];

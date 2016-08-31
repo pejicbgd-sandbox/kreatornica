@@ -32,9 +32,9 @@ class DB
     *   Constructor function
     *   @param array
     */
-    public function __construct($settings = [])
+    public function __construct()
     {
-        $this->_con = Conn::getInstance($settings);
+        $this->_con = Connection::getInstance();
         $this->_innerJoin = '';
         $this->_where = '';
     }
@@ -99,13 +99,13 @@ class DB
         return $this;
     }
 
-    public function where($where_equal_to, $operand = '=')
+    public function where($where_equal_to = [], $operand = '=')
     {
         $this->_where .= $this->setWhere($where_equal_to, $operand);
         return $this;
     }
 
-    public function whereOr($where_equal_to)
+    public function whereOr($where_equal_to = [])
     {
         $this->_where .= $this->setWhere($where_equal_to, 'or');
         return $this;
@@ -182,8 +182,12 @@ class DB
             case 'select':
                 $query = $this->getSelectQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
+var_dump($this->_query_response);
+                if($this->_query_response)
+                {   var_dump(1);
+                    $this->_result = $this->getResults();
+                }
 
-                $this->getResults();
                 if($this->_result && $this->_result > 0)
                 {
                     return $this->_result;
@@ -257,63 +261,69 @@ class DB
 
     private function setWhere($where_equal_to, $operand)
     {
-        $wheres = [];
         $operand = $this->validateOperand($operand);
 
-        if($operand == 'between')
+        $wheres = [];
+        if($this->isIterable($where_equal_to))
         {
-            return $this->setBetween($where_equal_to);
+            if($operand == 'between')
+            {
+                return $this->setBetween($where_equal_to);
+            }
+
+            if($operand == 'or')
+            {
+                return $this->setEqualToOr($where_equal_to);
+            }
+
+            if($operand == 'in')
+            {
+                return $this->setIn($where_equal_to);
+            }
+
+            if($operand == 'not in')
+            {
+                return $this->setNotIn($where_equal_to);
+            }
+
+            return $this->setEqualTo($where_equal_to, $operand);
         }
-
-        if($operand == 'or')
-        {
-            return $this->setEqualToOr($where_equal_to);
-        }
-
-        if($operand == 'in')
-        {
-            return $this->setIn($where_equal_to);
-        }
-
-        if($operand == 'not in')
-        {
-            return $this->setNotIn($where_equal_to);
-        }
-
-        return $this->setEqualTo($where_equal_to, $operand);
-
+        return '';
     }
 
     private function setEqualTo($where_equal_to, $operand)
     {
-        foreach($where_equal_to as $key => $value)
+        if($this->isIterable($where_equal_to))
         {
-            if(is_null($value))
+            foreach($where_equal_to as $key => $value)
             {
-                $wheres[] = $key . ' IS NULL';
-            }
-
-            if(is_int($key))
-            {
-                $wheres[] = $value;
-            }
-
-            if(is_int($value))
-            {
-                $wheres[] = sprintf($key . ' ' . $operand . ' %s', mysqli_real_escape_string($this->_con, $value));
-            }
-
-            if(is_array($value))
-            {
-                foreach ($value as $k => $v)
+                if(is_null($value))
                 {
-                    $wheres[] = sprintf($key . ' ' .$operand . ' "%s"', mysqli_real_escape_string($this->_con, $v));
+                    $wheres[] = $key . ' IS NULL';
                 }
-            }
 
-            if(is_string($value))
-            {
-                $wheres[] = sprintf($key . ' ' . $operand . ' "%s"', mysqli_real_escape_string($this->_con, $value));
+                if(is_int($key))
+                {
+                    $wheres[] = $value;
+                }
+
+                if(is_int($value))
+                {
+                    $wheres[] = sprintf($key . ' ' . $operand . ' %s', mysqli_real_escape_string($this->_con, $value));
+                }
+
+                if(is_array($value))
+                {
+                    foreach ($value as $k => $v)
+                    {
+                        $wheres[] = sprintf($key . ' ' .$operand . ' "%s"', mysqli_real_escape_string($this->_con, $v));
+                    }
+                }
+
+                if(is_string($value))
+                {
+                    $wheres[] = sprintf($key . ' ' . $operand . ' "%s"', mysqli_real_escape_string($this->_con, $value));
+                }
             }
         }
 
@@ -492,12 +502,12 @@ class DB
 
 /*--------- RESULT GETTERS BASED ON QUERY TYPE  ------------*/
 
-    private function getResults()
+    public function getResults()
     {
-        $this->_result = mysqli_num_rows($this->_query_response);
+        return mysqli_num_rows($this->_query_response);
     }
 
-    private function getInsertedId()
+    public function getInsertedId()
     {
         return mysqli_insert_id($this->_con);
     }
@@ -529,5 +539,10 @@ class DB
             $return = '=';
         }
         return $return;
+    }
+
+    private function isIterable($where_equal_to)
+    {
+        return (is_array($where_equal_to) && count($where_equal_to));
     }
 }

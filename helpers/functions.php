@@ -20,25 +20,41 @@ function getActiveLanguage(){
     return $lang;
 }
 
-function getAboutUsContent($db, $lang) {
-    $where = ['lang' => $lang];
-    $result = $db->select('about', $where)->fetchAll();
-    return [$result[0]->title, $result[0]->subtitle, $result[0]->text];
+function getAboutUsContent($lang)
+{
+    $db = new DB;
+    $where_equal_to['lang'] = $lang;
+    $db->select()
+        ->from('about')
+        ->where($where_equal_to)
+        ->run();
+
+    return $db->getSelected();
 }
 
-function getMembersContent($db, $lang) {
+function getMembersContent($lang)
+{
+    $db = new DB;
     $members = [];
-    $temp = $db->select('member_page')->fetchAll();
-    for ($i = 0; $i<= count($temp) - 1; $i++) {
-        $members[$i]['member_id'] = $temp[$i]->member_id;
-        $members[$i]['name'] = $temp[$i]->member_name;
-        $members[$i]['text'] = $temp[$i]->{'text_' .$lang};
-        $members[$i]['img'] = $temp[$i]->member_img;
-        $members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]->created_date);
-        $members[$i]['email'] = $temp[$i]->email;
-        $members[$i]['telefon'] = $temp[$i]->telefon;
+    //$temp = $db->select('member_page')->fetchAll();
+    $db->select()
+        ->from('member_page')
+        ->run();
+
+    if($db->getResults())
+    {
+        $temp = $db->getSelected();
+        for ($i = 0; $i<= count($temp) - 1; $i++) {
+            $members[$i]['member_id'] = $temp[$i]->member_id;
+            $members[$i]['name'] = $temp[$i]->member_name;
+            $members[$i]['text'] = $temp[$i]->{'text_' .$lang};
+            $members[$i]['img'] = $temp[$i]->member_img;
+            $members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]->created_date);
+            $members[$i]['email'] = $temp[$i]->email;
+            $members[$i]['telefon'] = $temp[$i]->telefon;
+        }
+        return $members;
     }
-    return $members;
 }
 
 function getProjectsContent($db) {
