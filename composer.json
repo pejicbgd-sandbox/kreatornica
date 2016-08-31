@@ -4,8 +4,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "helpers/"
+            "App\\": "helpers/",
+            "iporm\\db\\": "helpers/iporm/src/"
         },
-        "files": ["helpers/functions.php", "helpers/DB.php", "helpers/Result.php"]
+        "files": ["helpers/functions.php", "helpers/Result.php"]
     }
 }

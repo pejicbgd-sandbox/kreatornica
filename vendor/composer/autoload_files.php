@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ab382a10c8511339af72dbf4f41802af' => $baseDir . '/helpers/functions.php',
-    'f64392fb0a1500636fe81feabb4180b4' => $baseDir . '/helpers/DB.php',
     '5df2e70a43905b99625cdc416739c0ab' => $baseDir . '/helpers/Result.php',
 );

@@ -3,12 +3,13 @@
 @session_start();
 
 if(!defined('ROOT_PATH')) {
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    define('ROOT_PATH', 'http://kreatornica.com/');
 }
 
-require ROOT_PATH .'vendor/autoload.php';
+require '/home/kreatorn/public_html/vendor/autoload.php/';
 
-$db = DB::getInstance('localhost', 'kreatorci', 'QPHTUvRKzqWEU8aZ', 'kreatornica');
+$db = DB::getInstance('kreatornica.com', 'kreatorn_admin', 'iuMT?.SPzM5v', 'kreatorn_ica');
+
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 

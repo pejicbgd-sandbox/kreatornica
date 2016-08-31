@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'iporm\\db\\' => array($baseDir . '/helpers/iporm/src'),
     'App\\' => array($baseDir . '/helpers'),
 );
