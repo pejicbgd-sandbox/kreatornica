@@ -36,10 +36,9 @@ function getMembersContent($lang)
 {
     $db = new DB;
     $members = [];
-    //$temp = $db->select('member_page')->fetchAll();
     $db->select()
         ->from('member_page')
-        ->run();
+        ->show();
 
     if($db->getResults())
     {
@@ -57,7 +56,9 @@ function getMembersContent($lang)
     }
 }
 
-function getProjectsContent($db) {
+function getProjectsContent()
+{
+    $db = new DB;
     $result = $db->select('projects')->fetchAllArray();
     return $result;
 }

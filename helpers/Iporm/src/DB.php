@@ -12,8 +12,6 @@ class DB
 
     private $_where;
 
-    private $_where_equal_to;
-
     private $_between;
 
     private $_innerJoin;
@@ -57,7 +55,7 @@ class DB
         return $this;
     }
 
-    public function insertInto($table, $keys_and_values, $insert_options = '')
+    public function insertInto($table, $keys_and_values)
     {
         $this->_query_type = 'insert_into';
         $this->_table = $table;
@@ -170,33 +168,40 @@ class DB
             case 'delete':
                 $query = $this->getDeleteQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
-
                 return $this->getAffected();
+            break;
+
             case 'insert_into':
                 $query = $this->getInsertQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
-
                 return $this->getInsertedId();
+            break;
+
             case 'replace_into':
                 return self::getAffected();
+            break;
+
             case 'select':
                 $query = $this->getSelectQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
-var_dump($this->_query_response);
                 if($this->_query_response)
                 {   var_dump(1);
                     $this->_result = $this->getResults();
                 }
-
                 if($this->_result && $this->_result > 0)
                 {
                     return $this->_result;
                 }
                 return false;
+            break;
+
             case 'update':
                 return self::getAffected();
+            break;
+
             default:
                 return false;
+            break;
         }
     }
 
