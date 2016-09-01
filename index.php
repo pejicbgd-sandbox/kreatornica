@@ -1,5 +1,4 @@
 <?php require('includes/init.php'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -407,7 +406,7 @@
                             
                             <!-- Contact Form JavaScript -->
                             <script src="assets/js/contact_me.js"></script>
-                            <script src="assets/js/kreatorci.js"></script>
+                            <!--<script src="assets/js/kreatorci.js"></script>-->
 
 
                             <!--EXPANDS MEMBER SECTION-->

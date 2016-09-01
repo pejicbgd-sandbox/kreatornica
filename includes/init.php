@@ -3,54 +3,46 @@
 @session_start();
 
 if(!defined('ROOT_PATH')) {
-    //define('ROOT_PATH', 'http://kreatornica.com');
-    define('ROOT_PATH', 'http://localhost');
+    //define('ROOT_PATH', '/home/kreatorn/public_html/');
+    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
+require ROOT_PATH . "vendor/autoload.php";
 
-require "C:/xampp/htdocs/kreatornica/vendor/autoload.php";
-$config = require "C:/xampp/htdocs/kreatornica/helpers/config.php";
+$config = require ROOT_PATH . "helpers/config.php";
 
+$helper = new Helper;
 //$db = DB::getInstance('kreatornica.com', 'kreatorn_admin', 'iuMT?.SPzM5v', 'kreatorn_ica');
 
-$lang = getActiveLanguage();
+$lang = $helper->getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
 $consts['rootPath'] = ROOT_PATH;
 
-/*$about_us = getAboutUsContent($lang);
 
+$about_us = $helper->getAboutUsContent($lang);
 $consts['aboutUsTitle'] = $about_us[0]['title'];
 $consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
-$consts['aboutUs'] = $about_us[0]['text'];*/
+$consts['aboutUs'] = $about_us[0]['text'];
 
-$members = getMembersContent($lang);
-var_dump($members); die;
+$members = $helper->getMembersContent($lang);
 $consts['members'] = $members;
 
-$projects = getProjectsContent();
-$projectData = [];
-foreach ($projects as $key=>$project) {
-    $projectData[$key]['project_id'] = $project['project_id'];
-    $projectData[$key]['project_name'] = $project['project_name'];
-    $projectData[$key]['title'] = $project['title_' .$lang];
-    $projectData[$key]['text'] = $project['text_' .$lang];
-    $projectData[$key]['content'] = $project['content_' .$lang];
-    $projectData[$key]['image'] = $project['title_img'];
-}
+$projectData = $helper->getProjectsContent($lang);
 $consts['projects'] = $projectData;
 
 $galleries = glob(ROOT_PATH .'assets/img/gallery/*' , GLOB_ONLYDIR);
-foreach ($galleries as $key => $value) {
+foreach ($galleries as $key => $value)
+{
     $consts['galleries'][$key]['folder'] = str_replace (ROOT_PATH, '', $value);
 
     $tempImages = glob($value ."/*.*");
     $consts['galleries'][$key]['images'] = str_replace (ROOT_PATH, '', $tempImages);
 }
 
-require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
+require_once ROOT_PATH . 'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 
-$loader = new Twig_Loader_Filesystem(ROOT_PATH .'views/');
+$loader = new Twig_Loader_Filesystem(ROOT_PATH . 'views/');
 $twig = new Twig_Environment($loader, array(
     'debug' => true,
     'autoreload' => true

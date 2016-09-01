@@ -22,6 +22,8 @@ class DB
 
     private $_insert_options;
 
+    private $_set_data;
+
     private $_query_response;
 
     private $_result;
@@ -97,6 +99,14 @@ class DB
         return $this;
     }
 
+    public function update($table, $data_set = [])
+    {
+        $this->_query_type = 'update';
+        $this->_table = $table;
+        $this->setUpdateDataSet($data_set);
+        return $this;
+    }
+
     public function where($where_equal_to = [], $operand = '=')
     {
         $this->_where .= $this->setWhere($where_equal_to, $operand);
@@ -109,19 +119,19 @@ class DB
         return $this;
     }
 
-    public function whereIn($where_in)
+    public function whereIn($where_in = [])
     {
         $this->_where .= $this->setWhere($where_in, 'in');
         return $this;
     }
 
-    public function whereNotIn($where_not_in)
+    public function whereNotIn($where_not_in = [])
     {
         $this->_where .= $this->setWhere($where_not_in, 'not in');
         return $this;
     }
 
-    public function innerJoin($innerJoin)
+    public function innerJoin($innerJoin = [])
     {
         $this->setInnerJoin($innerJoin);
         return $this;
@@ -148,17 +158,14 @@ class DB
 
     public function getSelected()
     {
-        if($this->_query_type == 'select')
+        $result = [];
+        $i = 0;
+        while( $i < $this->_result)
         {
-            $result = [];
-            $i = 0;
-            while( $i < $this->_result)
-            {
-                $result[] = mysqli_fetch_assoc($this->_query_response);
-                $i++;
-            }
-            return $result;
+            $result[] = mysqli_fetch_assoc($this->_query_response);
+            $i++;
         }
+        return $result;
     }
 
     private function runQuery()
@@ -177,15 +184,11 @@ class DB
                 return $this->getInsertedId();
             break;
 
-            case 'replace_into':
-                return self::getAffected();
-            break;
-
             case 'select':
                 $query = $this->getSelectQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
                 if($this->_query_response)
-                {   var_dump(1);
+                {
                     $this->_result = $this->getResults();
                 }
                 if($this->_result && $this->_result > 0)
@@ -196,7 +199,9 @@ class DB
             break;
 
             case 'update':
-                return self::getAffected();
+                $query = $this->getUpdateQuery();
+                $this->_query_response = mysqli_query($this->_con, $query);
+                return $this->getAffected();
             break;
 
             default:
@@ -207,19 +212,27 @@ class DB
 
     public function show()
     {
-        switch($this->_query_type) {
+        switch($this->_query_type)
+        {
             case 'delete':
-                echo "\n" . $this->getDeleteQuery();
+                echo $this->getDeleteQuery();
+                break;
+
             case 'insert_into':
-                echo "\n" . $this->getInsertQuery();
-            case 'replace_into':
-                return self::getAffected();
+                echo $this->getInsertQuery();
+                break;
+
             case 'select':
-                echo "\n" . $this->getSelectQuery();
+                echo $this->getSelectQuery();
+                break;
+
             case 'update':
-                return self::getAffected();
+                echo $this->getUpdateQuery();
+                break;
+
             default:
-                return false;
+                echo '';
+                break;
         }
     }
 
@@ -260,6 +273,17 @@ class DB
         $query = 'DELETE ' . "\n\t";
         $query .= ' FROM ' . $this->_table . "\n\t";
         $query .= $this->_where . "\n\t";
+
+        return $query;
+    }
+
+    private function getUpdateQuery()
+    {
+        $query = 'UPDATE ' . "\n\t";
+        $query .= $this->_table . "\n\t";
+        $query .= " SET " . "\n\t";
+        $query .= $this->_set_data . "\n\t";
+        $query .= $this->_where;
 
         return $query;
     }
@@ -496,7 +520,7 @@ class DB
 
     private function setInnerJoin($innerJoin)
     {
-        if(!empty($innerJoin))
+        if($this->isIterable($innerJoin))
         {
             foreach ($innerJoin as $join)
             {
@@ -505,19 +529,34 @@ class DB
         }
     }
 
+    public function setUpdateDataSet($data_set)
+    {
+        if($this->isIterable($data_set))
+        {
+            $this->_set_data = '';
+            foreach ($data_set as $k => $v)
+            {
+                // TODO proveri ovo, da li treba FILTER_SANITIZE STRING?
+                $k = addslashes($k);
+                $v = addslashes($v);
+                $this->_set_data .= ', ' . "$k" . '=' . "$v";
+            }
+        }
+    }
+
 /*--------- RESULT GETTERS BASED ON QUERY TYPE  ------------*/
 
-    public function getResults()
+    private function getResults()
     {
         return mysqli_num_rows($this->_query_response);
     }
 
-    public function getInsertedId()
+    private function getInsertedId()
     {
         return mysqli_insert_id($this->_con);
     }
 
-    public function getAffected()
+    private function getAffected()
     {
         return mysqli_affected_rows($this->_con);
     }
@@ -546,7 +585,7 @@ class DB
         return $return;
     }
 
-    private function isIterable($where_equal_to)
+    public function isIterable($where_equal_to)
     {
         return (is_array($where_equal_to) && count($where_equal_to));
     }

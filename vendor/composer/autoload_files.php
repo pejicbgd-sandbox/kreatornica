@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ab382a10c8511339af72dbf4f41802af' => $baseDir . '/helpers/functions.php',
+    '1dda0cb0da844e11cbab1c39eca75207' => $baseDir . '/helpers/Helper.php',
     '931995cd436e219611bd3916003605d2' => $baseDir . '/helpers/Iporm/src/DB.php',
     'e19b0b5aa5fd132ac40e761ab2e73f31' => $baseDir . '/helpers/Iporm/src/Connection.php',
 );

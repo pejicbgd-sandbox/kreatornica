@@ -3,6 +3,6 @@
         "twig/twig": "^1.24"
     },
     "autoload": {
-        "files": ["helpers/functions.php", "helpers/Iporm/src/DB.php", "helpers/Iporm/src/Connection.php"]
+        "files": ["helpers/Helper.php", "helpers/Iporm/src/DB.php", "helpers/Iporm/src/Connection.php"]
     }
 }
