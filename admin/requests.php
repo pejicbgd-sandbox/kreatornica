@@ -4,6 +4,7 @@ define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 require ROOT_PATH . "vendor/autoload.php";
 
 $db = new DB();
+$helper = new Helper();
 
 if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
@@ -14,18 +15,21 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
         {
             $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
             $res = $helper->getAboutUsContent($lang);
-            echo json_encode($res); die;
+
+            echo json_encode($res[0]); die;
         }
     }
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
 
-    if(isset($_POST['action']) && $_POST['action'] !== '') {
+    if(isset($_POST['action']) && $_POST['action'] !== '')
+    {
         $action =  $_POST['action'];
 
-        if($action == 'saveAboutUs') {
-
+        if($action == 'saveAboutUs')
+        {
             $lang = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
             if(!in_array($lang, ['sr', 'sk', 'en'])) {
                 $lang = 'sr';
@@ -44,8 +48,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $where['lang'] = $lang;
             $db->update('about', $data)
                 ->where($where)
-                ->show(); die;
-            echo $result; die;
+                ->run();
+
+            echo $db->getAffected(); die;
         }
         elseif ($action == 'getMemberInfo') {
             $member_id = filter_var($_POST['member_id'], FILTER_SANITIZE_NUMBER_INT);

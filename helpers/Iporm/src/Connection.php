@@ -16,6 +16,7 @@ class Connection
     {
         try {
             self::$_con = mysqli_connect(self::$_host, self::$_username, self::$_password, self::$_db);
+            self::$_con->set_charset("utf8");
         } catch(Exception $e) {
             echo $e->getMessage();
         }

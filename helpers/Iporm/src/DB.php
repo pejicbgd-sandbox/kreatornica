@@ -201,7 +201,6 @@ class DB
             case 'update':
                 $query = $this->getUpdateQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
-                return $this->getAffected();
             break;
 
             default:
@@ -534,29 +533,73 @@ class DB
         if($this->isIterable($data_set))
         {
             $this->_set_data = '';
+            $update = array();
             foreach ($data_set as $k => $v)
             {
-                // TODO proveri ovo, da li treba FILTER_SANITIZE STRING?
-                $k = addslashes($k);
-                $v = addslashes($v);
-                $this->_set_data .= ', ' . "$k" . '=' . "$v";
+                if (is_numeric($k))
+                {
+                    if (!$v)
+                    {
+                        continue;
+                    }
+
+                    $update[] = mysqli_real_escape_string($this->_con, $v) . ' = VALUES(' . mysqli_real_escape_string($this->_con, $v) . ')';
+                }
+                else
+                {
+                    if (is_null($v))
+                    {
+                        $update[] = $k . ' = NULL';
+                    }
+                    elseif (is_int($k))
+                    {
+                        $update[] = $v;
+                    }
+                    elseif (is_array($v))
+                    {
+                        foreach ($v as $key => $value)
+                        {
+                            if (is_null($value))
+                            {
+                                $update[] = $k . ' = NULL';
+                            }
+                            elseif (is_int($k))
+                            {
+                                $update[] = $value;
+                            }
+                            else
+                            {
+                                $update[] = sprintf($k . ' = "%s"', mysqli_real_escape_string($this->_con, $value));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $update[] = sprintf($k . ' = "%s"', mysqli_real_escape_string($this->_con, $v));
+                    }
+                }
+            }
+
+            if (count($update))
+            {
+                $this->_set_data = "\t" . implode(',' . "\n\t", $update) . "\n";
             }
         }
     }
 
 /*--------- RESULT GETTERS BASED ON QUERY TYPE  ------------*/
 
-    private function getResults()
+    public function getResults()
     {
         return mysqli_num_rows($this->_query_response);
     }
 
-    private function getInsertedId()
+    public function getInsertedId()
     {
         return mysqli_insert_id($this->_con);
     }
 
-    private function getAffected()
+    public function getAffected()
     {
         return mysqli_affected_rows($this->_con);
     }

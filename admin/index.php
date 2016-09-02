@@ -7,6 +7,7 @@
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
     <meta charset="utf-8">
+    <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
     <meta name="author" content="GeeksLabs">
@@ -148,21 +149,12 @@
 <script src="js/jquery-ui-1.10.4.min.js"></script>
 <!-- bootstrap -->
 <script src="js/bootstrap.min.js"></script>
-<!-- nice scroll -->
-<script src="js/scripts.js"></script>
+
 <script>
     var viewData = {
-        rootPath: "<?php echo ROOT_PATH; ?>",
-        aboutUs: {
-            title: "<?php echo htmlentities($data['aboutUsTitle']); ?>",
-            subtitle: "<?php echo htmlentities($data['aboutUsSubtitle']); ?>",
-            text: "<?php echo htmlentities($data['aboutUs']); ?>"
-        },
-        projects: <?php echo json_encode($data['projects']); ?>,
-        projectData: <?php echo json_encode($data['projectData']); ?>
+        rootPath: "<?php echo ROOT_PATH; ?>"
     };
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <script src="js/c.js"></script>
 <!--<script src="js/custom.js"></script>-->
 </body>
