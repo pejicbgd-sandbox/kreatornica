@@ -24,7 +24,7 @@ $consts['aboutUsTitle'] = $about_us[0]['title'];
 $consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
 $consts['aboutUs'] = $about_us[0]['text'];
 
-$members = $helper->getMembersContent($lang);
+$members = $helper->getMembersContent();
 $consts['members'] = $members;
 
 $projectData = $helper->getProjectsContent($lang);

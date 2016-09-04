@@ -6,9 +6,9 @@
                 <h4 class="modal-title">Da li ste sigurni?</h4>
             </div>
             <div class="modal-body clearfix">
-                <form role="form" method="post" action="#" enctype="multipart/form-data">
+                <form role="form" method="post" action="#" enctype="multipart/form-data" id="delete-member-form">
                     <input type="hidden" name="action" value="deleteMember" />
-                    <input type="hidden" name="member_id" value="" />
+                    <input type="hidden" name="member_id" id="member-id" value="" />
                     <button type="submit" class="btn btn-primary pull-right" id="delete-member">Potvrdi</button><img class="loader hidden" src="{{ ROOT_PATH }}img/ajax-loader.gif" alt="Loading"/>
                 </form>
             </div>

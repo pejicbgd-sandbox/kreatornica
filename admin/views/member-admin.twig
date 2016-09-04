@@ -34,7 +34,7 @@
                         <td>{{ member.telefon }}</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <a href="#member-update" data-toggle="modal" data-member="{{ member.member_id }}" class="btn btn-primary member-update"><i class="icon_plus_alt2"></i></a>
+                                <a href="#member-update" class="btn btn-primary member-update" data-toggle="modal" data-member="{{ member.member_id }}" data-lang="{{ member.lang }}"><i class="icon_plus_alt2"></i></a>
                                 <a href="#member-delete" class="btn btn-danger member-delete" data-member="{{ member.member_id }}" data-toggle="modal"><i class="icon_close_alt2"></i></a>
                             </div>
                         </td>
@@ -48,9 +48,10 @@
 <!-- page end-->
 
 {% include "member-modal.twig" %}
+
 {% include "confirm.twig" %}
 
-<button class="btn btn-primary" type="submit" id="add-member">Dodaj člana</button>
+<button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#member-update" id="add-member">Dodaj člana</button>
 
  
  

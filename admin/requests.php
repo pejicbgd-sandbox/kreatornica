@@ -16,7 +16,21 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
             $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
             $res = $helper->getAboutUsContent($lang);
 
-            echo json_encode($res[0]); die;
+            echo json_encode($res[0]);
+            die;
+        }
+        elseif($action == 'getMemberInfo')
+        {
+            $member_id = filter_var($_GET['mid'], FILTER_SANITIZE_NUMBER_INT);
+            $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
+            if(!in_array($lang, ['sr', 'sk', 'en']))
+            {
+                $lang = 'sr';
+            }
+
+            $results = $helper->getSingleMemberData($member_id, $lang);
+            echo json_encode($results);
+            die;
         }
     }
 }
@@ -52,13 +66,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             echo $db->getAffected(); die;
         }
-        elseif ($action == 'getMemberInfo') {
-            $member_id = filter_var($_POST['member_id'], FILTER_SANITIZE_NUMBER_INT);
-            $where['member_id'] = $member_id;
-            $result = $db->select('member_page', $where)->fetchAll();
-            echo json_encode($result[0]); die;
-        }
-        elseif ($action == 'saveUpdatedMember') {
+        elseif ($action == 'saveUpdatedMember')
+        {
             $member_id = filter_var($_POST['member_id'], FILTER_SANITIZE_NUMBER_INT);
             $lang = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
             $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
@@ -70,41 +79,64 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                 $lang = 'sr';
             }
 
-            $data = [];
-            if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '') {
+            $member_data = [];
+            if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
+            {
                 $valid_extensions = ["jpeg", "jpg", "png"];
                 $path_parts = pathinfo($_FILES["image"]["name"]);
 
                 $extension = $path_parts['extension'];
                 $filesize = $_FILES['image']['size'];
 
-                if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/) {
+                if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/)
+                {
                     $filename = time() .'-' .$_FILES["image"]["name"];
 
-                    if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/members/' .$filename)) {
-                        $data['member_img'] = $filename;
+                    if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/members/' .$filename))
+                    {
+                        $member_data['member_img'] = $filename;
                     }
                 }
             }
 
-            $data['member_name'] = $name;
-            $data['text_' .$lang] = $bio;
-            $data['telefon'] = $phone;
-            $data['email'] = $email ? $email : null;
+            $member_data['name'] = $name;
+            $member_data['text'] = $bio;
+            $member_data['lang'] = $lang;
+            $member_data['telefon'] = $phone;
+            $member_data['email'] = $email ? $email : null;
+            $member_data['updated_date'] = time();
 
-            if(!!$member_id) {
-                $where['member_id'] = $member_id;
-                $result = $db->update('member_page', $data, $where);
-            } else {
-                $result = $db->insert('member_page', $data);
+            if(!!$member_id)
+            {
+                //update postojeceg
+                $member_data['member_id'] = $member_id;
+                $helper->updateExistingMember($member_data);
+                echo "updated"; die;
             }
-            echo $result; die;
+            else
+            {
+                // novi member
+                $helper->insertNewMember($member_data);
+                echo "inserted"; die;
+            }
         }
-        elseif($action == 'deleteMember') {
+        elseif($action == 'deleteMember')
+        {
             $member_id = filter_var($_POST['member_id'], FILTER_SANITIZE_NUMBER_INT);
             $where['member_id'] = $member_id;
-            $result = $db->delete('member_page', $where);
-            echo $result; die;
+            $db->delete()
+                ->from('members')
+                ->where($where)
+                ->run();
+
+            if($db->getAffected())
+            {
+                $db->delete()
+                    ->from('member_bio')
+                    ->run();
+            }
+
+            echo 'deleted'; die;
         }
         elseif($action == 'getProjectInfo') {
             $project_id = filter_var($_POST['project'], FILTER_SANITIZE_NUMBER_INT);

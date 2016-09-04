@@ -4,17 +4,21 @@ class DB
 {
     private $_con;
 
-    private $_query_type;
+    private $_queryType;
 
     private $_table;
 
     private $_group;
+
+    private $_groupBy;
 
     private $_where;
 
     private $_between;
 
     private $_innerJoin;
+
+    private $_leftJoin;
 
     private $_insert_keys;
 
@@ -36,6 +40,7 @@ class DB
     {
         $this->_con = Connection::getInstance();
         $this->_innerJoin = '';
+        $this->_leftJoin = '';
         $this->_where = '';
     }
 
@@ -47,7 +52,7 @@ class DB
     public function select($select = '*')
     {
         $this->_group = $select;
-        $this->_query_type = 'select';
+        $this->_queryType = 'select';
         return $this;
     }
 
@@ -59,7 +64,7 @@ class DB
 
     public function insertInto($table, $keys_and_values)
     {
-        $this->_query_type = 'insert_into';
+        $this->_queryType = 'insert_into';
         $this->_table = $table;
         $insert_values = [];
 
@@ -95,13 +100,13 @@ class DB
 
     public function delete()
     {
-        $this->_query_type = 'delete';
+        $this->_queryType = 'delete';
         return $this;
     }
 
     public function update($table, $data_set = [])
     {
-        $this->_query_type = 'update';
+        $this->_queryType = 'update';
         $this->_table = $table;
         $this->setUpdateDataSet($data_set);
         return $this;
@@ -137,6 +142,17 @@ class DB
         return $this;
     }
 
+    public function leftJoin($leftJoin = [])
+    {
+        $this->setLeftJoin($leftJoin);
+        return $this;
+    }
+
+    public function groupBy($groupBy = '')
+    {
+        $this->setGroupBy($groupBy);
+        return $this;
+    }
 
     public function run($custom_query = false, $query_type = false)
     {
@@ -170,18 +186,18 @@ class DB
 
     private function runQuery()
     {
-        switch($this->_query_type)
+        switch($this->_queryType)
         {
             case 'delete':
                 $query = $this->getDeleteQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
-                return $this->getAffected();
+                return true;
             break;
 
             case 'insert_into':
                 $query = $this->getInsertQuery();
                 $this->_query_response = mysqli_query($this->_con, $query);
-                return $this->getInsertedId();
+                return true;
             break;
 
             case 'select':
@@ -211,7 +227,7 @@ class DB
 
     public function show()
     {
-        switch($this->_query_type)
+        switch($this->_queryType)
         {
             case 'delete':
                 echo $this->getDeleteQuery();
@@ -245,6 +261,16 @@ class DB
         if($this->_innerJoin)
         {
             $query .= $this->_innerJoin . "\n\t";
+        }
+
+        if($this->_leftJoin)
+        {
+            $query .= $this->_leftJoin . "\n\t";
+        }
+
+        if($this->_groupBy)
+        {
+            $query .= $this->_groupBy . "\n\t";
         }
 
         $query .= $this->_where . "\n\t";
@@ -525,6 +551,25 @@ class DB
             {
                 $this->_innerJoin .= ' INNER JOIN ' . $join . "\n\t";
             }
+        }
+    }
+
+    private function setLeftJoin($leftJoin)
+    {
+        if($this->isIterable($leftJoin))
+        {
+            foreach ($leftJoin as $join)
+            {
+                $this->_leftJoin .= ' JOIN ' . $join . "\n\t";
+            }
+        }
+    }
+
+    private function setGroupBy($group_by)
+    {
+        if($group_by)
+        {
+            $this->_groupBy = 'GROUP BY' . "\n\t" . $group_by. "\n";
         }
     }
 

@@ -2,7 +2,8 @@
 
 class Helper
 {
-    public function getActiveLanguage(){
+    public function getActiveLanguage()
+    {
         $lang = 'sr';
         $allowed_langs = ['sk', 'en', 'sr'];
 
@@ -34,16 +35,15 @@ class Helper
         return $db->getSelected();
     }
 
-    public function getMembersContent($lang)
+    public function getMembersContent()
     {
         $db = new DB;
         $members = [];
-        $where_equal_to['mb.lang'] = $lang;
 
         $db->select()
             ->from('members m')
-            ->innerJoin(['member_bio mb ON m.member_id = mb.member_id'])
-            ->where($where_equal_to)
+            ->leftJoin(['member_bio mb ON m.member_id = mb.member_id'])
+            ->groupBy('m.member_id')
             ->run();
 
         $temp = $db->getSelected();
@@ -51,10 +51,11 @@ class Helper
         {
             for ($i = 0; $i < count($temp); $i++) {
                 $members[$i]['member_id'] = $temp[$i]['member_id'];
+                $members[$i]['lang'] = $temp[$i]['lang'];
                 $members[$i]['name'] = $temp[$i]['name'];
                 $members[$i]['text'] = $temp[$i]['text'];
                 $members[$i]['img'] = $temp[$i]['member_img'];
-                $members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]['created_date']);
+                $members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]['updated_date']);
                 $members[$i]['email'] = $temp[$i]['email'];
                 $members[$i]['telefon'] = $temp[$i]['telefon'];
             }
@@ -64,6 +65,7 @@ class Helper
 
     public function getProjectsContent($lang)
     {
+        $projectData = [];
         $where_equal_to['pi.lang'] = $lang;
 
         $db = new DB;
@@ -87,7 +89,7 @@ class Helper
             }
         }
 
-        return $result;
+        return $projectData;
     }
 
     public function getProject($db, $project_id, $lang)
@@ -106,17 +108,88 @@ class Helper
 
     public function returnBulked($lang)
     {
-
         $about_us = $this->getAboutUsContent($lang);
         $consts['aboutUsTitle'] = $about_us[0]['title'];
         $consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
         $consts['aboutUs'] = $about_us[0]['text'];
 
-        $members = $this->getMembersContent($lang);
+        $members = $this->getMembersContent();
         $consts['members'] = $members;
 
         $projects = $this->getProjectsContent($lang);
         $consts['projects'] = $projects;
         return $consts;
+    }
+
+    public function getSingleMemberData($member_id, $lang)
+    {
+        $where_equal_to['m.member_id'] = $member_id;
+        $where_equal_to['mb.lang'] = $lang;
+
+        $db = new DB;
+        $db->select()
+            ->from('members m')
+            ->leftJoin(['member_bio mb ON m.member_id = mb.member_id'])
+            ->where($where_equal_to)
+            ->run();
+
+        return $db->getSelected();
+    }
+
+    public function insertNewMember($member_data = [])
+    {
+        $bio_data['text'] = $member_data['text'];
+        $bio_data['lang'] = $member_data['lang'];
+
+        unset($member_data['text']);
+        unset($member_data['lang']);
+
+        $db = new DB();
+        $db->insertInto('members', $member_data)
+            ->run();
+
+        $bio_data['member_id'] = $db->getInsertedId();
+
+        $db = new DB();
+        $db->insertInto('member_bio', $bio_data)
+            ->run();
+
+        return $db->getInsertedId();
+    }
+
+    public function updateExistingMember($member_data)
+    {
+        $where['members.member_id'] = $member_data['member_id'];
+
+        $bio_data['text'] = $member_data['text'];
+        $bio_data['lang'] = $member_data['lang'];
+
+        unset($member_data['text']);
+        unset($member_data['lang']);
+
+        $db = new DB();
+        $db->update('members', $member_data)
+            ->where($where)
+            ->run();
+
+        if($db->getAffected())
+        {
+            $where = [];
+            $where['member_bio.member_id'] = $member_data['member_id'];
+            $where['member_bio.lang'] = $bio_data['lang'];
+
+            $db = new DB();
+            $db->update('member_bio', $bio_data)
+                ->where($where)
+                ->run();
+
+            if(!$db->getAffected())
+            {
+                $bio_data['member_id'] = $member_data['member_id'];
+                $db->insertInto('member_bio', $bio_data)
+                    ->run();
+            }
+        }
+        return $db->getAffected();
     }
 }
