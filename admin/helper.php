@@ -25,9 +25,7 @@ $twig->addExtension(new Twig_Extension_Debug());
 
 $info = [];
 $info = $helper->returnBulked('sr');
-$info['projectData'] = null;
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 
 Twig_Autoloader::register();
-

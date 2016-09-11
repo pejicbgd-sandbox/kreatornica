@@ -109,4 +109,52 @@
         });
     });
 
+    $('#project, #language').on('change', function() {
+        var $projectForm = $('#project-form');
+        $projectForm.find('input[name=action]').val('getProjectInfo');
+        $projectForm.find('input[name=project_name]').hide();
+
+        $.ajax({
+            method: "POST",
+            url: endPoint,
+            data: new FormData($projectForm[0]),
+            contentType: false,
+            processData: false,
+            success: function(res) {
+                var response;
+
+                if(typeof res != undefined)
+                {
+                    response = JSON.parse(res);
+                    $projectForm.find('#project-title').val(response[0].title);
+                    $projectForm.find('#project-text').val(response[0].text);
+                    $projectForm.find('#project-content').val(response[0].content);
+                }
+            }
+        });
+    });
+
+    $('#project-form').on('submit', function(e) {
+        var $this = $(this);
+
+        e.preventDefault();
+
+        if($this.find('input[name=action]') !== 'saveNewProject')
+        {
+            $this.find('input[name=action]').val('saveProjectInfo');
+        }
+
+        $.ajax({
+            method: "POST",
+            url: endPoint,
+            data: new FormData($this[0]),
+            contentType: false,
+            processData: false,
+            success: function(res) {
+                $this.find('input[name=project_name]').hide(600);
+                $this.find('input[name=action]').val('saveProjectInfo');
+            }
+        });
+    });
+
 })(jQuery);

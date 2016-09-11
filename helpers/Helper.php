@@ -92,18 +92,20 @@ class Helper
         return $projectData;
     }
 
-    public function getProject($db, $project_id, $lang)
+    public function getSingleProjectData($project_id, $lang)
     {
-        $where['project_id'] = $project_id;
-        $result = $db->select('projects', $where)->fetchAllArray();
+        $db = new DB();
 
-        $project['project_id'] = $project_id;
-        $project['lang'] = $lang;
-        $project['name'] = $result[0]['project_name'];
-        $project['title'] = $result[0]['title_' .$lang];
-        $project['text'] = $result[0]['text_' .$lang];
-        $project['content'] = $result[0]['content_' .$lang];
-        return $project;
+        $where['pi.project_id'] = $project_id;
+        $where['pi.lang'] = $lang;
+
+        $db->select()
+            ->from('projects p')
+            ->innerJoin(array('projects_info pi ON pi.project_id = p.project_id'))
+            ->where($where)
+            ->run();
+
+        return $db->getSelected();
     }
 
     public function returnBulked($lang)
@@ -191,5 +193,86 @@ class Helper
             }
         }
         return $db->getAffected();
+    }
+
+    public function updateProjectData($project_id, $lang, $project_data)
+    {
+        $where['project_id'] = $project_id;
+        $where['lang'] = $lang;
+
+        if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
+        {
+            $valid_extensions = ["jpeg", "jpg", "png"];
+            $path_parts = pathinfo($_FILES["image"]["name"]);
+
+            $extension = $path_parts['extension'];
+            $filesize = $_FILES['image']['size'];
+
+            if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/)
+            {
+                $filename = time() .'-' .$_FILES["image"]["name"];
+
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/projects/' .$filename)) {
+                    $data['title_img'] = $filename;
+                }
+            }
+        }
+
+        $db = new DB();
+        $db->update('projects_info', $project_data)
+            ->where($where)
+            ->run();
+
+        unset($where['lang']);
+
+        if(isset($data))
+        {
+            $db = new DB();
+            $db->update('projects', $data)
+                ->where($where)
+                ->run();
+        }
+
+        return $db->getAffected();
+    }
+
+    public function insertProjectData($projectData)
+    {
+        if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
+        {
+            $valid_extensions = ["jpeg", "jpg", "png"];
+            $path_parts = pathinfo($_FILES["image"]["name"]);
+
+            $extension = $path_parts['extension'];
+            $filesize = $_FILES['image']['size'];
+
+            if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/)
+            {
+                $filename = time() .'-' .$_FILES["image"]["name"];
+
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/projects/' .$filename)) {
+                    $data['title_img'] = $filename;
+                }
+            }
+        }
+
+        $data['project_name'] = $projectData['project_name'];
+        $data['created_date'] = time();
+
+        $db = new DB();
+        $db->insertInto('projects', $data)
+            ->run();
+
+        $infoData['project_id'] = $db->getInsertedId();
+        $infoData['title'] = $projectData['title'];
+        $infoData['text'] = $projectData['text'];
+        $infoData['content'] = $projectData['content'];
+        $infoData['lang'] = $projectData['lang'];
+
+        $db = new DB();
+        $db->insertInto('projects_info', $infoData)
+            ->run();
+
+        return $db->getInsertedId();
     }
 }

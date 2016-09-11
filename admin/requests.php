@@ -138,50 +138,42 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             echo 'deleted'; die;
         }
-        elseif($action == 'getProjectInfo') {
+        elseif($action == 'getProjectInfo')
+        {
             $project_id = filter_var($_POST['project'], FILTER_SANITIZE_NUMBER_INT);
             $lang = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
 
             if(!in_array($lang, ['sr', 'sk', 'en'])) {
                 $lang = 'sr';
             }
-            $consts = $helper->returnBulked('sr');
-            $consts['projectData'] = getProject($db, $project_id, $lang);
 
+            $projectData = $helper->getSingleProjectData($project_id, $lang);
+
+            echo json_encode($projectData); die;
         }
-        elseif($action == 'saveProjectInfo') {
+        elseif($action == 'saveProjectInfo')
+        {
             $project_id = filter_var($_POST['project'], FILTER_SANITIZE_NUMBER_INT);
-            $lang = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
-            $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-            $text = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
-            $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+            $data['lang'] = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
+            $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+            $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
+            $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
 
-            $where['project_id'] = $project_id;
-            $data['title_' .$lang] = $title;
-            $data['text_' .$lang] = $text;
-            $data['content_' .$lang] = $content;
-
-            if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '') {
-                $valid_extensions = ["jpeg", "jpg", "png"];
-                $path_parts = pathinfo($_FILES["image"]["name"]);
-
-                $extension = $path_parts['extension'];
-                $filesize = $_FILES['image']['size'];
-
-                if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/) {
-                    $filename = time() .'-' .$_FILES["image"]["name"];
-
-                    if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/projects/' .$filename)) {
-                        $data['title_img'] = $filename;
-                    }
-                }
-            }
-
-            $result = $db->update('projects', $data, $where);
-            $consts = $helper->returnBulked('sr');
-            $consts['projectData'] = getProject($db, $project_id, $lang);
+            echo $helper->updateProjectData($project_id, $data['lang'], $data); die;
         }
-    } else {
+        elseif($action == 'saveNewProject')
+        {
+            $lang = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
+            $data['project_name'] = filter_var($_POST['project_name'], FILTER_SANITIZE_STRING);
+            $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+            $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
+            $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+
+            echo $helper->insertProjectData($data); die;
+        }
+    }
+    else
+    {
         $consts = $helper->returnBulked('sr');
     }
 }
