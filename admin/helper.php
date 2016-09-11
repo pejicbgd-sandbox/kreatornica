@@ -2,7 +2,7 @@
 
 @session_start();
 
-define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+define('ROOT_PATH', 'C:/server/htdocs/kreatornica/');
 
 require ROOT_PATH . "vendor/autoload.php";
 //require '/home/kreatorn/public_html/vendor/autoload.php/';
@@ -25,9 +25,8 @@ $twig->addExtension(new Twig_Extension_Debug());
 
 $info = [];
 $info = $helper->returnBulked('sr');
-$info['projectData'] = null;
+// var_dump($info); die;
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 
 Twig_Autoloader::register();
-

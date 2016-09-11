@@ -109,4 +109,26 @@
         });
     });
 
+    $('#save-gallery').on('click', function(e) {
+        var _galleryForm = $('#gallery-form');
+        e.preventDefault();
+
+        if(_galleryForm.find('#gallery').val() != 0)
+        {
+            _galleryForm.find('.loader').show();
+            _galleryForm.find('input[name=action]').val('setGalleryInfo');
+
+            $.ajax({
+                method: "POST",
+                url: endPoint,
+                processData: false,
+                contentType: false,
+                data: new FormData(_galleryForm[0]),
+                success: function(res) {
+                    _galleryForm.find('.loader').hide();
+                }
+            });
+        }
+    });
+
 })(jQuery);

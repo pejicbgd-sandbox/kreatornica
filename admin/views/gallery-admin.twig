@@ -1,37 +1,37 @@
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="page-header"><i class="fa fa-laptop"></i> Aktivnosti - Izmeni sekciju</h3>
+        <h3 class="page-header"><i class="fa fa-laptop"></i> Galerija</h3>
         <ol class="breadcrumb">
             <li><i class="fa fa-home"></i><a href="index.html">Pocetna</a></li>
-            <li><i class="fa fa-laptop"></i>Aktivnosti</li>
+            <li><i class="fa fa-laptop"></i>Galerija</li>
         </ol>
     </div>
 </div>
 
 <section class="panel">
     <div class="panel-body">
-        <form class="form-horizontal " method="post" action="?page=project-admin" enctype="multipart/form-data"
-              name="project-form" id="project-form">
+        <form class="form-horizontal " method="post" action="?page=gallery-admin" enctype="multipart/form-data" name="gallery-form" id="gallery-form">
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputSuccess" id="project-chooser">Izaberi projekat: </label>
+                <label class="control-label col-lg-2" for="gallery" id="gallery-chooser">Izaberi galeriju: </label>
                 <div class="col-lg-10">
-                    <select class="form-control m-bot15" name="project">
-                        {% for project in projects %}
-                            <option value="{{ project.project_id }}" {% if project.project_id == projectData.project_id %}selected="selected"{% endif %}>{{ project.project_name }}</option>
+                    <select class="form-control m-bot15" name="gallery" id="gallery">
+                        <option value="0">Izaberi galeriju</option>
+                        {% for gallery in galleries %}
+                            <option value="{{ gallery.gallery_id }}">{{ gallery.gallery_name }}</option>
                         {% endfor %}
                     </select>
 
                 </div>
 
-                <label class="control-label col-lg-2" for="inputSuccess" >Izaberi jezik: </label>
+                <label class="control-label col-lg-2" for="gallery-language" >Izaberi jezik: </label>
                 <div class="col-lg-10">
-                    <select class="form-control m-bot15" name="language" id="project-language">
-                        <option value="sr" {% if projectData.lang == 'sr' %}selected="selected"{% endif %}>Srpski</option>
-                        <option value="sk" {% if projectData.lang == 'sk' %}selected="selected"{% endif %}>Slovački</option>
-                        <option value="en" {% if projectData.lang == 'en' %}selected="selected"{% endif %}>Engleski</option>
+                    <select class="form-control m-bot15" name="language" id="gallery-language">
+                        <option value="sr">Srpski</option>
+                        <option value="sk">Slovački</option>
+                        <option value="en">Engleski</option>
                     </select>
 
-                    <input class="form-control input-lg m-bot15" type="text" name="title" placeholder="Izmeni naslov" id="project-title" value="{{ projectData.title }}"/>
+                    <input class="form-control input-lg m-bot15" type="text" name="title" placeholder="Izmeni naslov" id="gallery-title" value=""/>
                 </div>
             </div>
             <div class="row">
@@ -46,13 +46,12 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">Unesi tekst: </label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="text" rows="6" id="project-text">{{ projectData.text }}</textarea>
+                                        <textarea class="form-control" name="text" rows="6" id="gallery-text"></textarea>
                                     </div>
 
                                     <div style="float: left; margin-left: 2%; margin-top: -4%;">
-                                        <p style="margin-left: 3%;" class="help-block">Unesi naslovnu sliku
-                                            projekta</p><br>
-                                        <input type="file" id="exampleInputFile3" name="image">
+                                        <p style="margin-left: 3%;" class="help-block">Unesi naslovnu sliku</p><br>
+                                        <input type="file" id="gallery-image" name="image">
                                     </div>
                                 </div>
                             </div>
@@ -66,14 +65,14 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Izmeni sadržaj o projektu
+                            Izmeni sadržaj galerije
                         </header>
                         <div class="panel-body">
                             <div class="form">
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">Unesi tekst: </label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control ckeditor" name="content" rows="6" id="project-content">{{ projectData.content }}</textarea>
+                                        <textarea class="form-control ckeditor" name="content" rows="6" id="gallery-content"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -81,8 +80,10 @@
                     </section>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" form="project-form" id="save-project">Pošalji</button>
-            <input type="hidden" name="action" value="getProjectInfo"/>
+            <button type="submit" class="btn btn-primary" form="gallery-form" id="save-gallery">Pošalji</button>
+            <button type="submit" class="btn btn-primary" form="gallery-form" id="new-gallery">Dodaj novu</button>
+            <img class="loader hidden" src="{{ ROOT_PATH }}img/ajax-loader.gif" alt="Loading"/>
+            <input type="hidden" name="action" value="getGalleryInfo"/>
         </form>
     </div>
 </section>

@@ -55,7 +55,7 @@ class Helper
                 $members[$i]['name'] = $temp[$i]['name'];
                 $members[$i]['text'] = $temp[$i]['text'];
                 $members[$i]['img'] = $temp[$i]['member_img'];
-                $members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]['updated_date']);
+                //$members[$i]['created_date'] = gmdate('d-m-Y', $temp[$i]['updated_date']);
                 $members[$i]['email'] = $temp[$i]['email'];
                 $members[$i]['telefon'] = $temp[$i]['telefon'];
             }
@@ -118,6 +118,10 @@ class Helper
 
         $projects = $this->getProjectsContent($lang);
         $consts['projects'] = $projects;
+
+        $galleries = $this->getGalleriesContent($lang);
+        $consts['galleries'] = $galleries;
+
         return $consts;
     }
 
@@ -191,5 +195,27 @@ class Helper
             }
         }
         return $db->getAffected();
+    }
+
+    public function getGalleriesContent($lang = 'sr')
+    {
+        $where['gi.lang'] = $lang;
+
+        $db = new DB();
+        $db->select()
+            ->from('gallery g')
+            ->innerJoin(array('gallery_info gi ON g.gallery_id = gi.gallery_id'))
+            ->where($where)
+            ->run();
+
+        return $db->getSelected();
+    }
+
+    public function setGalleryInfo($data = [])
+    {
+        $where['gallery_id'] = $data['gallery_id'];
+
+        $db = new DB();
+        $db->update('gallery', $data)->run();
     }
 }
