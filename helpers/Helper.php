@@ -120,6 +120,10 @@ class Helper
 
         $projects = $this->getProjectsContent($lang);
         $consts['projects'] = $projects;
+
+        $gallery = $this->getGalleryContent($lang);
+        $consts['galleries'] = $gallery;
+
         return $consts;
     }
 
@@ -274,5 +278,71 @@ class Helper
             ->run();
 
         return $db->getInsertedId();
+    }
+
+    public function getGalleryContent($lang, $gallery_id = false)
+    {
+        $where['gi.lang'] = $lang;
+
+        if($gallery_id)
+        {
+            $where['g.gallery_id'] = $gallery_id;
+        }
+
+        $db = new DB();
+        $db->select()
+            ->from('gallery g')
+            ->leftJoin(['gallery_info gi ON g.gallery_id = gi.gallery_id'])
+            ->where($where)
+            ->run();
+
+        return $db->getSelected();
+    }
+
+    public function setGalleryInfo($data)
+    {
+        $where['gallery_id'] = $data['gallery_id'];
+
+        if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
+        {
+            $valid_extensions = ["jpeg", "jpg", "png"];
+            $path_parts = pathinfo($_FILES["image"]["name"]);
+
+            $extension = $path_parts['extension'];
+            $filesize = $_FILES['image']['size'];
+
+            if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/)
+            {
+                $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/gallery_id_' . $data['gallery_id'];
+                if(!file_exists($folder_name))
+                {
+                    mkdir($folder_name, 0777);
+                }
+
+                $filename = time() .'-' .$_FILES["image"]["name"];
+
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/' .$filename))
+                {
+                    $gal['gallery_img'] = $filename;
+                    $db = new DB();
+                    $db->update('gallery', $gal)
+                        ->where($where)
+                        ->run();
+                }
+            }
+        }
+
+        $gallery['text'] = $data['text'];
+        $gallery['title'] = $data['title'];
+        $gallery['content'] = $data['content'];
+
+        $where['lang'] = $data['lang'];
+
+        $db = new DB();
+        $db->update('gallery_info', $gallery)
+            ->where($where)
+            ->run();
+
+        return $db->getAffected();
     }
 }

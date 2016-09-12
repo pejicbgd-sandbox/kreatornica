@@ -32,12 +32,20 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
             echo json_encode($results);
             die;
         }
+        elseif($action == 'getSingleGalleryData')
+        {
+            $lang = filter_var($_GET['language'], FILTER_SANITIZE_STRING);
+            $gallery_id = filter_var($_GET['gallery'], FILTER_SANITIZE_NUMBER_INT);
+
+            $galleryData = $helper->getGalleryContent($lang, $gallery_id);
+
+            echo json_encode($galleryData, true); die;
+        }
     }
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-
     if(isset($_POST['action']) && $_POST['action'] !== '')
     {
         $action =  $_POST['action'];
@@ -171,16 +179,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             echo $helper->insertProjectData($data); die;
         }
-    }
-    elseif($action == 'setGalleryInfo')
-    {
-        $data['gallery_id'] = filter_var($_POST['gallery'], FILTER_SANITIZE_NUMBER_INT);
-        $data['lang'] = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
-        $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-        $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
-        $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
-
-        echo $helper->setGalleryInfo($data);
+        elseif($action == 'setGalleryInfo')
+        {
+            $data['gallery_id'] = filter_var($_POST['gallery'], FILTER_SANITIZE_NUMBER_INT);
+            $data['lang'] = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
+            $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+            $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
+            $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+            
+            echo $helper->setGalleryInfo($data);
+        }
     }
     else
     {
