@@ -301,8 +301,6 @@ class Helper
 
     public function setGalleryInfo($data)
     {
-        $where['gallery_id'] = $data['gallery_id'];
-
         if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
         {
             $valid_extensions = ["jpeg", "jpg", "png"];
@@ -321,16 +319,18 @@ class Helper
 
                 $filename = time() .'-' .$_FILES["image"]["name"];
 
-                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/' .$filename))
-                {
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/' .$filename)) {
                     $gal['gallery_img'] = $filename;
-                    $db = new DB();
-                    $db->update('gallery', $gal)
-                        ->where($where)
-                        ->run();
                 }
             }
         }
+
+        $where['gallery_id'] = $data['gallery_id'];
+
+        $db = new DB();
+        $db->update('gallery', $gal)
+            ->where($where)
+            ->run();
 
         $gallery['text'] = $data['text'];
         $gallery['title'] = $data['title'];
