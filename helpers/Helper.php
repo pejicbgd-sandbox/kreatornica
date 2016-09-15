@@ -282,11 +282,27 @@ class Helper
 
     public function getGalleryContent($lang, $gallery_id = false)
     {
+        $returnArray['imagesArray'] = [];
+        $returnArray['db'] = [];
+
         $where['gi.lang'] = $lang;
 
         if($gallery_id)
         {
             $where['g.gallery_id'] = $gallery_id;
+            $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/gallery_id_' . $gallery_id;
+
+            if(file_exists($folder_name))
+            {
+                $handle = opendir($folder_name);
+                while($file = readdir($handle))
+                {
+                    if($file !== '.' && $file !== '..')
+                    {
+                        $returnArray['imagesArray'][] = $file;
+                    }
+                }
+            }
         }
 
         $db = new DB();
@@ -296,7 +312,9 @@ class Helper
             ->where($where)
             ->run();
 
-        return $db->getSelected();
+        $returnArray['db'] = $db->getSelected();
+
+        return $returnArray;
     }
 
     public function setGalleryInfo($data)

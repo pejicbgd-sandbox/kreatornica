@@ -189,6 +189,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             echo $helper->setGalleryInfo($data); die;
         }
+        elseif($action == 'createNewGallery')
+        {
+            echo 'jebote'; die;
+        }
+        elseif($action == 'deleteGalleryImage')
+        {
+            $gallery_folder = $_POST['path'][0];
+            $image_name = $_POST['path'][1];
+
+            $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/' . $gallery_folder;
+            if(file_exists($folder_name) && file_exists($folder_name . '/' . $image_name))
+            {
+                unlink($folder_name . '/' . $image_name);
+                echo 'deleted'; die;
+            }
+        }
     }
     else
     {

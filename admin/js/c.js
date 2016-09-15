@@ -159,12 +159,18 @@
 
     $('#save-gallery').on('click', function(e) {
         var _galleryForm = $('#gallery-form');
-        e.preventDefault();
 
-        if(_galleryForm.find('#gallery').val() != 0)
+        e.preventDefault();
+        _galleryForm.find('#gallery-name-wrapper').find('input').val('').end().hide();
+
+        if(_galleryForm.find('#gallery').val() != 0 || _galleryForm.find('input[name=action]').val() == 'createNewGallery')
         {
             _galleryForm.find('.loader').show();
-            _galleryForm.find('input[name=action]').val('setGalleryInfo');
+
+            if(_galleryForm.find('input[name=action]').val() !== 'createNewGallery')
+            {
+                _galleryForm.find('input[name=action]').val('setGalleryInfo');
+            }
 
             $.ajax({
                 method: "POST",
@@ -181,7 +187,8 @@
 
     $('#gallery-language,#gallery').on('change', function(e) {
         var _loader = $('.loader'),
-            _form = $('#gallery-form');
+            _form = $('#gallery-form'),
+            _galleryImagesHtml = '';
 
         e.preventDefault();
         _form.find('input[name=action]').val('getSingleGalleryData');
@@ -193,7 +200,9 @@
                 url: endPoint,
                 data: $('#gallery-form').serialize(),
                 success: function(res) {
-                    var response;
+                    var response,
+                        imagesArrayLength,
+                        responseObject;
 
                     _loader.hide();
                     if(typeof res != undefined)
@@ -201,14 +210,62 @@
                         response = JSON.parse(res);
                     }
 
-                    _form.find('#gallery-title').val(response[0].title);
-                    _form.find('#gallery-text').val(response[0].text);
-                    _form.find('#gallery-content').val(response[0].content);
+                    responseObject = response.db[0];
+                    _form.find('#gallery-title').val(responseObject.title);
+                    _form.find('#gallery-text').val(responseObject.text);
+                    _form.find('#gallery-content').val(responseObject.content);
                     _form.find('#gallery-image').val('');
                     _form.find('#gallery-images').val('');
+                    _form.find('#gallery-name-wrapper').find('input').val('').end().hide();
+
+                    imagesArrayLength = response.imagesArray.length;
+                    if( imagesArrayLength > 0)
+                    {
+                        for(var i = 0; i < imagesArrayLength; i++)
+                        {
+                            _galleryImagesHtml += '<img src="../assets/img/gallery/gallery_id_' + _form.find('#gallery').val() + '/' + response.imagesArray[i] + '" class="gallery-img" alt="" width="150" />';
+                        }
+                        _form.find('#images-holder').show().html(_galleryImagesHtml);
+                    }
+                    else
+                    {
+                        _form.find('#images-holder').html('');
+                    }
                 }
             });
         }
+    });
+
+    $('#new-gallery').on('click', function(e) {
+        var _form = $('#gallery-form');
+
+        e.preventDefault();
+        _form[0].reset();
+        _form.find('#gallery-name-wrapper').show();
+        _form.find('input[name=action]').val('createNewGallery');
+    });
+
+    $('#images-holder').on('click', '.gallery-img', function() {
+        var _this = $(this),
+            ajaxData = {action: 'deleteGalleryImage'},
+            _loader = $('.loader'),
+            pathParts = _this.prop('src').split('/');
+
+        _loader.show();
+        ajaxData.path = pathParts.slice(-2);
+
+        $.ajax({
+            method: "POST",
+            url: endPoint,
+            data: ajaxData,
+            success: function(res) {
+                _loader.hide();
+                if(res == 'deleted')
+                {
+                    _this.remove();
+                }
+            }
+        });
     });
 
 })(jQuery);

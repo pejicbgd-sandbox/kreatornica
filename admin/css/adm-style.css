@@ -4947,7 +4947,19 @@ span.customSelect.changed {
     display: inline-block;
     margin-left: 15px;
 }
-.display-none
+.display-none,
+#images-holder,
+#gallery-name-wrapper
 {
     display: none;
+}
+#images-holder img
+{
+    margin-left: 15px;
+    margin-bottom: 15px;
+    display: inline-block;
+    cursor: pointer;
+}
+#images-holder img:hover {
+    opacity: 0.8;
 }
