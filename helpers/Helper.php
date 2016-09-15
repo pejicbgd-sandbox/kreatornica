@@ -301,9 +301,12 @@ class Helper
 
     public function setGalleryInfo($data)
     {
+        $valid_extensions = ["jpeg", "jpg", "png"];
+        $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/gallery_id_' . $data['gallery_id'];
+        $where['gallery_id'] = $data['gallery_id'];
+
         if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
         {
-            $valid_extensions = ["jpeg", "jpg", "png"];
             $path_parts = pathinfo($_FILES["image"]["name"]);
 
             $extension = $path_parts['extension'];
@@ -311,26 +314,45 @@ class Helper
 
             if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/)
             {
-                $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/gallery_id_' . $data['gallery_id'];
                 if(!file_exists($folder_name))
                 {
                     mkdir($folder_name, 0777);
                 }
 
-                $filename = time() .'-' .$_FILES["image"]["name"];
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/head' . $extension))
+                {
+                    $gal['gallery_img'] = 'head' . $extension;
 
-                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/' .$filename)) {
-                    $gal['gallery_img'] = $filename;
+                    $db = new DB();
+                    $db->update('gallery', $gal)
+                        ->where($where)
+                        ->run();
                 }
             }
         }
 
-        $where['gallery_id'] = $data['gallery_id'];
+        $total = count($_FILES['images']['name']);
+        if($total > 0)
+        {
+            for($i = 0; $i < $total; $i++)
+            {
+                $path_parts = pathinfo($_FILES["images"]["name"][$i]);
 
-        $db = new DB();
-        $db->update('gallery', $gal)
-            ->where($where)
-            ->run();
+                $extension = $path_parts['extension'];
+                $filesize = $_FILES['images']['size'][$i];
+
+                if(in_array($extension, $valid_extensions) && $filesize < 10485760)
+                {
+                    if(!file_exists($folder_name))
+                    {
+                        mkdir($folder_name, 0777);
+                    }
+
+                    //move_uploaded_file($_FILES['images']['tmp_name'][$i], $folder_name . '/' . $_FILES['images']['tmp_name'][$i]);
+                    @copy($_FILES['images']['tmp_name'][$i], $folder_name.'/'.$_FILES['images']['name'][$i]);
+                }
+            }
+        }
 
         $gallery['text'] = $data['text'];
         $gallery['title'] = $data['title'];

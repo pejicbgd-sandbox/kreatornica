@@ -179,7 +179,7 @@
         }
     });
 
-    $('#gallery-language').on('change', function(e) {
+    $('#gallery-language,#gallery').on('change', function(e) {
         var _loader = $('.loader'),
             _form = $('#gallery-form');
 
@@ -201,7 +201,11 @@
                         response = JSON.parse(res);
                     }
 
-                    _form.find('#gallery-title').val(response.alt_text);
+                    _form.find('#gallery-title').val(response[0].title);
+                    _form.find('#gallery-text').val(response[0].text);
+                    _form.find('#gallery-content').val(response[0].content);
+                    _form.find('#gallery-image').val('');
+                    _form.find('#gallery-images').val('');
                 }
             });
         }

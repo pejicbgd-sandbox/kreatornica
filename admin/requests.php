@@ -186,8 +186,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
             $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
             $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
-            
-            echo $helper->setGalleryInfo($data);
+
+            echo $helper->setGalleryInfo($data); die;
         }
     }
     else
