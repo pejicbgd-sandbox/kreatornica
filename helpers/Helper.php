@@ -2,6 +2,14 @@
 
 class Helper
 {
+    private $_rootPath;
+
+    public function __construct()
+    {
+        // $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
+        $this->_rootPath = '/var/www/html/kreatornica/';
+    }
+
     public function getActiveLanguage()
     {
         $lang = 'sr';
@@ -10,7 +18,8 @@ class Helper
         if(isset($_GET['lang']) && $_GET['lang'] !== '') {
             $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
 
-            if(!in_array($lang, $allowed_langs)) {
+            if(!in_array($lang, $allowed_langs))
+            {
                 $lang = 'sr';
             }
 
@@ -25,7 +34,7 @@ class Helper
 
     public function getAboutUsContent($lang)
     {
-        $db = new DB;
+        $db = new DB();
         $where_equal_to['lang'] = $lang;
         $db->select()
             ->from('about')
@@ -216,7 +225,7 @@ class Helper
             {
                 $filename = time() .'-' .$_FILES["image"]["name"];
 
-                if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/projects/' .$filename)) {
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $this->_rootPath . 'assets/img/projects/' .$filename)) {
                     $data['title_img'] = $filename;
                 }
             }
@@ -254,7 +263,7 @@ class Helper
             {
                 $filename = time() .'-' .$_FILES["image"]["name"];
 
-                if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/projects/' .$filename)) {
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $this->_rootPath . 'assets/img/projects/' .$filename)) {
                     $data['title_img'] = $filename;
                 }
             }
@@ -290,7 +299,7 @@ class Helper
         if($gallery_id)
         {
             $where['g.gallery_id'] = $gallery_id;
-            $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/gallery_id_' . $gallery_id;
+            $folder_name = $this->_rootPath . 'assets/img/gallery/gallery_id_' . $gallery_id;
 
             if(file_exists($folder_name))
             {
@@ -320,7 +329,7 @@ class Helper
     public function setGalleryInfo($data)
     {
         $valid_extensions = ["jpeg", "jpg", "png"];
-        $folder_name = 'C:/xampp/htdocs/kreatornica/assets/img/gallery/gallery_id_' . $data['gallery_id'];
+        $folder_name = $this->_rootPath . 'assets/img/gallery/gallery_id_' . $data['gallery_id'];
         $where['gallery_id'] = $data['gallery_id'];
 
         if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
