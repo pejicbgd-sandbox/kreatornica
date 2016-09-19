@@ -1,7 +1,8 @@
 <?php
 
-// define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
-define ('ROOT_PATH', '/var/www/html/kreatornica/');
+define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+// define ('ROOT_PATH', '/var/www/html/kreatornica/');
+// define ('ROOT_PATH', '/home/kreatorn/public_html/');
 require ROOT_PATH . "vendor/autoload.php";
 
 $db = new DB();
@@ -192,18 +193,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         }
         elseif($action == 'createNewGallery')
         {
-            var_dump($_POST); die;
+            $data['gallery_name'] = filter_var($_POST['gallery_name'], FILTER_SANITIZE_STRING);
             $data['lang'] = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
             $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
             $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
             $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+
+            echo $helper->createNewGallery($data); die;
         }
         elseif($action == 'deleteGalleryImage')
         {
             $gallery_folder = $_POST['path'][0];
             $image_name = $_POST['path'][1];
 
-            $folder_name = '/var/www/html/kreatornica/assets/img/gallery/' . $gallery_folder;
+            $folder_name = ROOT_PATH . 'assets/img/gallery/' . $gallery_folder;
             if(file_exists($folder_name) && file_exists($folder_name . '/' . $image_name))
             {
                 unlink($folder_name . '/' . $image_name);

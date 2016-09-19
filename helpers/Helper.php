@@ -6,8 +6,9 @@ class Helper
 
     public function __construct()
     {
-        // $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
-        $this->_rootPath = '/var/www/html/kreatornica/';
+        $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
+        // $this->_rootPath = '/var/www/html/kreatornica/';
+        // $this->_rootPath = '/home/kreatorn/public_html/';
     }
 
     public function getActiveLanguage()
@@ -346,9 +347,9 @@ class Helper
                     mkdir($folder_name, 0777);
                 }
 
-                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/head' . $extension))
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/head.' . $extension))
                 {
-                    $gal['gallery_img'] = 'head' . $extension;
+                    $gal['gallery_img'] = 'head.' . $extension;
 
                     $db = new DB();
                     $db->update('gallery', $gal)
@@ -375,7 +376,6 @@ class Helper
                         mkdir($folder_name, 0777);
                     }
 
-                    //move_uploaded_file($_FILES['images']['tmp_name'][$i], $folder_name . '/' . $_FILES['images']['tmp_name'][$i]);
                     @copy($_FILES['images']['tmp_name'][$i], $folder_name.'/'.$_FILES['images']['name'][$i]);
                 }
             }
@@ -393,5 +393,45 @@ class Helper
             ->run();
 
         return $db->getAffected();
+    }
+
+    public function createNewGallery($data)
+    {
+        $valid_extensions = ["jpeg", "jpg", "png"];
+        if(isset($_FILES["image"]["type"]) && $_FILES["image"]["type"] !== '')
+        {
+            $path_parts = pathinfo($_FILES["image"]["name"]);
+
+            $extension = $path_parts['extension'];
+            $filesize = $_FILES['image']['size'];
+
+            $gallery_data['gallery_name'] = $data['gallery_name'];
+            $gallery_data['gallery_img'] = 'head.' . $extension;
+
+            $db = new DB();
+            $db->insertInto('gallery', $gallery_data)
+                ->run();
+
+            $gallery_info['gallery_id'] = $db->getInsertedId();
+            $gallery_info['text'] = $data['text'];
+            $gallery_info['title'] = $data['title'];
+            $gallery_info['content'] = $data['content'];
+            $gallery_info['lang'] = $data['lang'];
+
+            $db = new DB();
+            $db->insertInto('gallery_info', $gallery_info)
+                ->run();
+
+            if(in_array($extension, $valid_extensions) && $filesize < 10485760 /*10MB*/)
+            {
+                $folder_name = $this->_rootPath . 'assets/img/gallery/gallery_id_' . $gallery_info['gallery_id'];
+                if(!file_exists($folder_name))
+                {
+                    mkdir($folder_name, 0777);
+                }
+                move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/head.' . $extension);
+            }
+        }
+
     }
 }
