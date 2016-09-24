@@ -117,7 +117,7 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Erasmus+ 2015</h2>
+                            <h2 id="project-title">Erasmus+ 2015</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
 
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa
@@ -403,10 +403,10 @@
                             <script type="text/javascript" src="assets/fancybox/helpers/jquery.fancybox-buttons.js"></script>
                             <script type="text/javascript" src="assets/fancybox/jquery.fancybox-thumbs.js"></script>
                             <script type="text/javascript" src="assets/fancybox/jquery.fancybox-media.js"></script>
-                            
+
                             <!-- Contact Form JavaScript -->
                             <script src="assets/js/contact_me.js"></script>
-                            <!--<script src="assets/js/kreatorci.js"></script>-->
+                            <script src="admin/js/c.js"></script>
 
 
                             <!--EXPANDS MEMBER SECTION-->

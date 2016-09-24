@@ -7,20 +7,21 @@
 
         {% for index, gallery in galleries %}
             <div class="col-md-4 col-sm-6 portfolio-item">
-                <a class="fancybox portfolio-link" rel="gallery{{index}}" href="{{ gallery.folder }}/thumb.jpg">
+                <a class="fancybox portfolio-link" rel="gallery{{index}}" href="{{ gallery.folder }}head.jpg">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content">
                             <i class="fa fa-plus fa-3x"></i>
                         </div>
                     </div>
-                    <img src="{{ gallery.folder }}/thumb.jpg" class="img-responsive" alt=""/>
+                    <img src="{{ gallery.folder }}head.jpg" class="img-responsive gallery-head-img" alt=""/>
                 </a>
 
                 <div class="portfolio-caption">
-                    <h4>ROADTRIP</h4>
-                    <p class="text-muted">Lorem Ipsum</p>
+                    <h4>{{ gallery.data.title}}</h4>
+                    <p class="text-muted">{{ gallery.data.text}}</p>
+                    <p class="text-muted">{{ gallery.data.content}}</p>
                 </div>
-            
+
                 {% for image in gallery.images %}
                     {% if('thumb' not in image) %}
                         <div class="hidden">
@@ -33,4 +34,4 @@
             </div>
         {% endfor %}
     </div>
-</div>							
+</div>

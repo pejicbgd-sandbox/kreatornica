@@ -6,8 +6,8 @@ class Helper
 
     public function __construct()
     {
-        $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
-        // $this->_rootPath = '/var/www/html/kreatornica/';
+        // $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
+        $this->_rootPath = '/var/www/html/kreatornica/';
         // $this->_rootPath = '/home/kreatorn/public_html/';
     }
 

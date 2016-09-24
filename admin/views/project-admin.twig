@@ -13,6 +13,13 @@
         <form class="form-horizontal " method="post" action="" enctype="multipart/form-data"  name="project-form" id="project-form">
             <div class="form-group">
 
+                <div id="project-name-wrapper">
+                    <label class="control-label col-lg-2" for="project-name" >Ime projekta: </label>
+                    <div class="col-lg-10">
+                        <input class="form-control input-lg m-bot15" type="text" name="project_name" placeholder="Dodaj ime projekta" id="project-name" value=""/>
+                    </div>
+                </div>
+
                 <div id="project-name-wrapper" class="col-lg-12 display-none">
                     <label class="control-label col-lg-2" for="inputSuccess">Ime projekta: </label>
                     <div class="col-lg-10">
@@ -93,6 +100,8 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary" form="project-form" id="save-project">Pošalji</button>
+            <button type="submit" class="btn btn-primary" form="project-form" id="add-project">Dodaj novi</button>
+            <img class="loader display-none" src="{{ ROOT_PATH }}img/ajax-loader.gif" alt="Loading"/>
             <input type="hidden" name="action" value=""/>
         </form>
     </div>

@@ -7,7 +7,7 @@
 
         {% for project in projects %}
             <div class="col-md-4 col-sm-6 portfolio-item">
-                <a href="#projectModal1" class="portfolio-link" data-toggle="modal">
+                <a href="#projectModal1" class="portfolio-link" data-toggle="modal" data-project-id="{{ project.project_id }}">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content">
                             <i class="fa fa-plus fa-3x"></i>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         {% endfor %}
-        
+
     </div>
 </div>
 

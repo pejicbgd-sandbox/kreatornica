@@ -2,9 +2,11 @@
 
 @session_start();
 
-if(!defined('ROOT_PATH')) {
+if(!defined('ROOT_PATH'))
+{
+    define('ROOT_PATH', '/var/www/html/kreatornica/');
     //define('ROOT_PATH', '/home/kreatorn/public_html/');
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    // define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
@@ -18,7 +20,6 @@ $lang = $helper->getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
 $consts['rootPath'] = ROOT_PATH;
 
-
 $about_us = $helper->getAboutUsContent($lang);
 $consts['aboutUsTitle'] = $about_us[0]['title'];
 $consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
@@ -30,15 +31,22 @@ $consts['members'] = $members;
 $projectData = $helper->getProjectsContent($lang);
 $consts['projects'] = $projectData;
 
-$galleries = glob(ROOT_PATH .'assets/img/gallery/*' , GLOB_ONLYDIR);
-foreach ($galleries as $key => $value)
+$galleries = $helper->getGalleryContent($lang);
+if(is_array($galleries) && !empty($galleries))
 {
-    $consts['galleries'][$key]['folder'] = str_replace (ROOT_PATH, '', $value);
-
-    $tempImages = glob($value ."/*.*");
-    $consts['galleries'][$key]['images'] = str_replace (ROOT_PATH, '', $tempImages);
+    $galleries[0] = $galleries['db'];
+    unset($galleries['imagesArray']);
+    unset($galleries['db']);
+    foreach ($galleries[0] as $key => $value)
+    {
+        $folder = 'assets/img/gallery/gallery_id_' . $value['gallery_id'] . '/';
+        $consts['galleries'][$key]['folder'] = $folder;
+        $tempImages = glob($folder ."*.jpg");
+        $consts['galleries'][$key]['images'] = str_replace(ROOT_PATH, '', $tempImages);
+        $consts['galleries'][$key]['data'] = $value;
+    }
 }
-
+// var_dump($consts['projects']); die;
 require_once ROOT_PATH . 'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 

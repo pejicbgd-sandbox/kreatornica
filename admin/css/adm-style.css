@@ -4949,7 +4949,8 @@ span.customSelect.changed {
 }
 .display-none,
 #images-holder,
-#gallery-name-wrapper
+#gallery-name-wrapper,
+#project-name-wrapper
 {
     display: none;
 }

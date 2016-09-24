@@ -3,7 +3,7 @@
 @session_start();
 
 // define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
-define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+define('ROOT_PATH', '/var/www/html/kreatornica/');
 // define ('ROOT_PATH', '/home/kreatorn/public_html/');
 
 require ROOT_PATH . "vendor/autoload.php";

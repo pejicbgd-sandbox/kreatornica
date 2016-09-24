@@ -135,24 +135,33 @@
     });
 
     $('#project-form').on('submit', function(e) {
-        var $this = $(this);
+        var _this = $(this),
+            _action = _this.find('input[name=action]');
 
         e.preventDefault();
-
-        if($this.find('input[name=action]') !== 'saveNewProject')
+        _this.find('.loader').show();
+        if(_action !== 'saveNewProject')
         {
-            $this.find('input[name=action]').val('saveProjectInfo');
+            _action.val('saveProjectInfo');
         }
 
         $.ajax({
             method: "POST",
             url: endPoint,
-            data: new FormData($this[0]),
+            data: new FormData(_this[0]),
             contentType: false,
             processData: false,
             success: function(res) {
-                $this.find('input[name=project_name]').hide(600);
-                $this.find('input[name=action]').val('saveProjectInfo');
+                if(_action == 'saveNewProject')
+                {
+                    window.location.reload();
+                }
+
+                _this.find('.loader').show();
+                _this.find('#project-image').html('');
+                _this.find('#project').trigger('change');
+                /*_this.find('input[name=project_name]').hide(600);
+                _action.val('saveProjectInfo');*/
             }
         });
     });
@@ -253,6 +262,15 @@
         _form.find('#images-holder').html('');
     });
 
+    $('#add-project').on('click', function(e) {
+        var _form = $('#project-form');
+        e.preventDefault();
+        _form[0].reset();
+        _form.find('#project-name-wrapper').show();
+        _form.find('input[name=action]').val('createNewProject');
+        _form.find('#images-holder').html('');
+    });
+
     $('#images-holder').on('click', '.gallery-img', function() {
         var _this = $(this),
             ajaxData = {action: 'deleteGalleryImage'},
@@ -274,6 +292,19 @@
                 }
             }
         });
+    });
+
+    if($.fancybox)
+    {
+        $('.fancybox').fancybox({
+    		'hideOnContentClick': true
+    	});
+    }
+
+    $('.portfolio-link').on('click', function() {
+        var projectId = $(this).data('projectId');
+
+        $('#projectModal1').find('#project-title').val('Ivan');
     });
 
 })(jQuery);

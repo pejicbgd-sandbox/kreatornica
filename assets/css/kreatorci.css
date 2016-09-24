@@ -2,7 +2,7 @@
 body {
     overflow-x: hidden;
     font-family: "Roboto Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
-    
+
 }
 
 .text-muted {
@@ -32,7 +32,7 @@ a.active {
 
 a {
     color: #fcb63b;
-    
+
 }
 
 a:hover,
@@ -120,7 +120,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 
- 
+
 
 .btn-xl {
     padding: 20px 40px;
@@ -240,12 +240,12 @@ fieldset[disabled] .btn-xl.active {
    float: right;
    margin-right: -250px;
    margin-top: -52px;
-  
+
 }
 .language-icons ul li {
    display:inline;
    padding: 0px 5px;
- 
+
 }
 
 .logo-img {
@@ -304,7 +304,7 @@ fieldset[disabled] .btn-xl.active {
     .navbar-default.navbar-shrink  {
        font-size: 1.1em;
     }
-	
+
 	.language-icons {
 		float:right;
 		margin: 0px auto;
@@ -314,9 +314,9 @@ fieldset[disabled] .btn-xl.active {
 	 .language-icons ul li{
 		 display: block;
 		 padding: 5px 0px;
-	 }	
-	 
-	
+	 }
+
+
 }
 
 header {
@@ -420,7 +420,7 @@ section h3.section-subheading {
     position: relative;
     margin: 0 auto;
     max-width: 400px;
-	
+
 }
 
  .portfolio-item .portfolio-link .portfolio-hover {
@@ -480,15 +480,15 @@ section h3.section-subheading {
 
  * {
     z-index: 2;
-}  
+}
 /*FANCY BOX*/
 
 .hidden {
     display: none;
 }
                 /*PORTFOLIO KRAJ*/
-				
-				
+
+
 /*POP UP WINDOW START*/
 
 
@@ -496,21 +496,21 @@ section h3.section-subheading {
 	position:relative;
 	left: 4%;
 	height:250px;
-	width:400px;  
+	width:400px;
 	margin:0px auto;
-	  
 
-	
+
+
 }
 .formBtn .btn{
 	position: relative;
 	padding: 10px 50px;
-    margin-top: 50px;	
+    margin-top: 50px;
 	font-size: 1.5em;
 }
 
 
-				
+
 
 @media(min-width:767px) {
      .portfolio-item {
@@ -584,7 +584,7 @@ section h3.section-subheading {
     border-radius: 100%;
     text-align: center;
     color: #fff;
-   
+
 }
 
 .timeline-image .link-bg{
@@ -726,10 +726,10 @@ section h3.section-subheading {
 .team-member {
     margin-bottom: 50px;
     text-align: center;
-	
+
 }
 
-  
+
 
 
 .team-member img {
@@ -749,7 +749,7 @@ section h3.section-subheading {
 
 .team-member_secondRow{
       float:right;
-	  position:relative;top:0px;left:40%;         
+	  position:relative;top:0px;left:40%;
 }
 
 .team-member_secondRow p {
@@ -760,7 +760,7 @@ section h3.section-subheading {
     margin-top: 25px;
     margin-bottom: 0;
     text-transform: none;
-    
+
 }
 
 
@@ -832,7 +832,7 @@ section#contact .text-danger {
 
 footer {
     padding: 25px 0;
-   
+
 }
 
 footer span.copyright {
@@ -980,4 +980,8 @@ img::-moz-selection {
 
 body {
     webkit-tap-highlight-color: #fcb63b;
+}
+.gallery-head-img
+{
+    width: 100%;
 }
