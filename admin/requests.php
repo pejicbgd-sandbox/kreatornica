@@ -1,7 +1,7 @@
 <?php
 
-// define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
-define ('ROOT_PATH', '/var/www/html/kreatornica/');
+define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+// define ('ROOT_PATH', '/var/www/html/kreatornica/');
 // define ('ROOT_PATH', '/home/kreatorn/public_html/');
 require ROOT_PATH . "vendor/autoload.php";
 
@@ -173,7 +173,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         }
         elseif($action == 'saveNewProject')
         {
-            $lang = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
+            $data['lang'] = filter_var($_POST['language'], FILTER_SANITIZE_STRING);
             $data['project_name'] = filter_var($_POST['project_name'], FILTER_SANITIZE_STRING);
             $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
             $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
@@ -212,6 +212,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                 unlink($folder_name . '/' . $image_name);
                 echo 'deleted'; die;
             }
+        }
+        elseif($action == 'getProjectPopupInfo')
+        {
+            $project_id = filter_var($_POST['pId'], FILTER_SANITIZE_NUMBER_INT);
+            $lang = filter_var($_POST['lang'], FILTER_SANITIZE_STRING);
+
+            echo json_encode($helper->getProjectPopupInfo($project_id, $lang), true); die;
         }
     }
     else

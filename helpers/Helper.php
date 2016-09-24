@@ -6,8 +6,8 @@ class Helper
 
     public function __construct()
     {
-        // $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
-        $this->_rootPath = '/var/www/html/kreatornica/';
+        $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
+        // $this->_rootPath = '/var/www/html/kreatornica/';
         // $this->_rootPath = '/home/kreatorn/public_html/';
     }
 
@@ -233,17 +233,35 @@ class Helper
         }
 
         $db = new DB();
-        $db->update('projects_info', $project_data)
+        $db->select()
+            ->from('projects_info')
             ->where($where)
             ->run();
 
-        unset($where['lang']);
+        $result = $db->getSelected();
 
-        if(isset($data))
+        if(!empty($result))
         {
             $db = new DB();
-            $db->update('projects', $data)
+            $db->update('projects_info', $project_data)
                 ->where($where)
+                ->run();
+
+            unset($where['lang']);
+
+            if(isset($data))
+            {
+                $db = new DB();
+                $db->update('projects', $data)
+                    ->where($where)
+                    ->run();
+            }
+        }
+        else
+        {
+            $project_data['project_id'] = $project_id;
+            $db = new DB();
+            $db->insertInto('projects_info', $project_data)
                 ->run();
         }
 
@@ -432,6 +450,20 @@ class Helper
                 move_uploaded_file($_FILES["image"]["tmp_name"], $folder_name . '/head.' . $extension);
             }
         }
+    }
 
+    public function getProjectPopupInfo($project_id, $lang)
+    {
+        $where['pi.project_id'] = $project_id;
+        $where['pi.lang'] = $lang;
+
+        $db = new DB();
+        $db->select()
+            ->from('projects p')
+            ->innerJoin(['projects_info pi ON p.project_id = pi.project_id'])
+            ->where($where)
+            ->run();
+
+        return $db->getSelected();
     }
 }

@@ -112,7 +112,7 @@
     $('#project, #language').on('change', function() {
         var $projectForm = $('#project-form');
         $projectForm.find('input[name=action]').val('getProjectInfo');
-        $projectForm.find('input[name=project_name]').hide();
+        $projectForm.find('#project-name-wrapper').find('input').val('').end().hide();
 
         $.ajax({
             method: "POST",
@@ -126,21 +126,31 @@
                 if(typeof res != undefined)
                 {
                     response = JSON.parse(res);
-                    $projectForm.find('#project-title').val(response[0].title);
-                    $projectForm.find('#project-text').val(response[0].text);
-                    $projectForm.find('#project-content').val(response[0].content);
+                    if(response.length)
+                    {
+                        $projectForm.find('#project-title').val(response[0].title);
+                        $projectForm.find('#project-text').val(response[0].text);
+                        $projectForm.find('#project-content').val(response[0].content);
+                    }
+                    else
+                    {
+                        $projectForm.find('#project-title').val('');
+                        $projectForm.find('#project-text').val('');
+                        $projectForm.find('#project-content').val('');
+                    }
                 }
             }
         });
     });
 
     $('#project-form').on('submit', function(e) {
+
         var _this = $(this),
             _action = _this.find('input[name=action]');
 
         e.preventDefault();
         _this.find('.loader').show();
-        if(_action !== 'saveNewProject')
+        if(_action.val() !== 'saveNewProject')
         {
             _action.val('saveProjectInfo');
         }
@@ -152,7 +162,7 @@
             contentType: false,
             processData: false,
             success: function(res) {
-                if(_action == 'saveNewProject')
+                if(_action.val() == 'saveNewProject')
                 {
                     window.location.reload();
                 }
@@ -160,8 +170,6 @@
                 _this.find('.loader').show();
                 _this.find('#project-image').html('');
                 _this.find('#project').trigger('change');
-                /*_this.find('input[name=project_name]').hide(600);
-                _action.val('saveProjectInfo');*/
             }
         });
     });
@@ -196,6 +204,42 @@
                     _galleryForm.find('.loader').hide();
                     _galleryForm.find('#images-holder').html('');
                     $('#gallery').trigger('change');
+                }
+            });
+        }
+    });
+
+    $('#save-project').on('click', function(e) {
+        var _form = $('#project-form'),
+            _action = _form.find('input[name=action]'),
+            createNew = !!(_action.val() == 'saveNewProject');
+
+        e.preventDefault();
+
+        if(_form.find('#project').val() != 0 || createNew)
+        {
+            _form.find('.loader').show();
+
+            if(!createNew)
+            {
+                _action.val('saveProjectInfo');
+                _form.find('#project-name-wrapper').find('input').val('').end().hide();
+                _form.find('input[name=action]').val('saveProjectInfo');
+            }
+
+            $.ajax({
+                method: "POST",
+                url: endPoint,
+                processData: false,
+                contentType: false,
+                data: new FormData(_form[0]),
+                success: function(res) {
+                    if(createNew)
+                    {
+                        window.location.reload();
+                    }
+                    _form.find('.loader').hide();
+                    _form.find('#project-image').html('');
                 }
             });
         }
@@ -265,9 +309,10 @@
     $('#add-project').on('click', function(e) {
         var _form = $('#project-form');
         e.preventDefault();
+
         _form[0].reset();
         _form.find('#project-name-wrapper').show();
-        _form.find('input[name=action]').val('createNewProject');
+        _form.find('input[name=action]').val('saveNewProject');
         _form.find('#images-holder').html('');
     });
 
@@ -302,9 +347,21 @@
     }
 
     $('.portfolio-link').on('click', function() {
-        var projectId = $(this).data('projectId');
+        var projectId = $(this).data('projectId'),
+            lang = $(this).data('lang'),
+            _modal = $('#projectModal1');
 
-        $('#projectModal1').find('#project-title').val('Ivan');
+            $.ajax({
+                method: "POST",
+                url: endPoint,
+                data: 'action=getProjectPopupInfo&pId=' + projectId + '&lang=' + lang,
+                success: function(res) {
+                    var response = JSON.parse(res);
+                    _modal.find('#project-title').text(response[0].project_name);
+                    _modal.find('.project-subtitle').text(response[0].title);
+                }
+            });
+
     });
 
 })(jQuery);

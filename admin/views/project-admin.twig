@@ -20,24 +20,12 @@
                     </div>
                 </div>
 
-                <div id="project-name-wrapper" class="col-lg-12 display-none">
-                    <label class="control-label col-lg-2" for="inputSuccess">Ime projekta: </label>
-                    <div class="col-lg-10">
-                        <select class="form-control m-bot15" name="project" id="project">
-                            <option value="0">Izaberi </option>
-                            {% for project in projects %}
-                                <option value="{{ project.project_id }}" {% if project.project_id == 1 %}selected="selected"{% endif %}>{{ project.project_name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
                 <label class="control-label col-lg-2" for="inputSuccess">Izaberi projekat: </label>
                 <div class="col-lg-10">
                     <select class="form-control m-bot15" name="project" id="project">
                         <option value="0">Izaberi </option>
                         {% for project in projects %}
-                            <option value="{{ project.project_id }}" {% if project.project_id == 1 %}selected="selected"{% endif %}>{{ project.project_name }}</option>
+                            <option value="{{ project.project_id }}">{{ project.project_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -50,7 +38,7 @@
                         <option value="en">Engleski</option>
                     </select>
 
-                    <input class="form-control input-lg m-bot15" type="text" name="title" placeholder="Izmeni naslov" id="project-title" value="{{ projects[0].title }}"/>
+                    <input class="form-control input-lg m-bot15" type="text" name="title" placeholder="Izmeni naslov" id="project-title" value=""/>
                 </div>
             </div>
             <div class="row">
@@ -65,7 +53,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">Unesi tekst: </label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="text" rows="6" id="project-text">{{ projects[0].text }}</textarea>
+                                        <textarea class="form-control" name="text" rows="6" id="project-text"></textarea>
                                     </div>
 
                                     <div style="float: left; margin-left: 2%; margin-top: -4%;">
@@ -91,7 +79,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">Unesi tekst: </label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control ckeditor" name="content" rows="6" id="project-content">{{ projects[0].content }}</textarea>
+                                        <textarea class="form-control ckeditor" name="content" rows="6" id="project-content"></textarea>
                                     </div>
                                 </div>
                             </div>
