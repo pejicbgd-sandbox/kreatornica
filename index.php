@@ -39,7 +39,7 @@
 
 <!-- Header -->
 <header>
-    <div class="container">
+    <div class="container intro-wrapper">
         <?php echo $twig->render('header.twig', $consts); ?>
     </div>
 </header>

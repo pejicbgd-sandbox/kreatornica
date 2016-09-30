@@ -67,7 +67,7 @@
 
         $modal.find('#bio-language').on('change', function() {
             getMemberInfo(memberId, $(this).val());
-        })
+        });
     });
 
     $('#update-member-form').on('submit', function(e) {
@@ -123,7 +123,7 @@
             success: function(res) {
                 var response;
 
-                if(typeof res != undefined)
+                if(typeof res !== undefined)
                 {
                     response = JSON.parse(res);
                     if(response.length)
@@ -176,11 +176,11 @@
 
     $('#save-gallery').on('click', function(e) {
         var _galleryForm = $('#gallery-form'),
-            createNew = !!(_galleryForm.find('input[name=action]').val() == 'createNewGallery');
+            createNew = (_galleryForm.find('input[name=action]').val() == 'createNewGallery');
 
         e.preventDefault();
 
-        if(_galleryForm.find('#gallery').val() != 0 || createNew)
+        if(_galleryForm.find('#gallery').val() !== 0 || createNew)
         {
             _galleryForm.find('.loader').show();
 
@@ -212,11 +212,11 @@
     $('#save-project').on('click', function(e) {
         var _form = $('#project-form'),
             _action = _form.find('input[name=action]'),
-            createNew = !!(_action.val() == 'saveNewProject');
+            createNew = (_action.val() == 'saveNewProject');
 
         e.preventDefault();
 
-        if(_form.find('#project').val() != 0 || createNew)
+        if(_form.find('#project').val() !== 0 || createNew)
         {
             _form.find('.loader').show();
 
@@ -252,7 +252,7 @@
 
         e.preventDefault();
         _form.find('input[name=action]').val('getSingleGalleryData');
-        if(_form.find('#gallery').val() != 0)
+        if(_form.find('#gallery').val() !== 0)
         {
             _loader.show();
             $.ajax({
@@ -265,7 +265,7 @@
                         responseObject;
 
                     _loader.hide();
-                    if(typeof res != undefined)
+                    if(typeof res !== undefined)
                     {
                         response = JSON.parse(res);
                     }
@@ -295,6 +295,7 @@
             });
         }
     });
+
 
     $('#new-gallery').on('click', function(e) {
         var _form = $('#gallery-form');
@@ -356,9 +357,15 @@
                 url: endPoint,
                 data: 'action=getProjectPopupInfo&pId=' + projectId + '&lang=' + lang,
                 success: function(res) {
-                    var response = JSON.parse(res);
-                    _modal.find('#project-title').text(response[0].project_name);
-                    _modal.find('.project-subtitle').text(response[0].title);
+                    var response;
+
+                    if(typeof res !== undefined)
+                    {
+                        response = JSON.parse(res);
+                        _modal.find('#project-title').text(response[0].project_name);
+                        _modal.find('.project-subtitle').text(response[0].title);
+                        _modal.find('.project-content').text(response[0].content);
+                    }
                 }
             });
 
