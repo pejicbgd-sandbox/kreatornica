@@ -371,4 +371,8 @@
 
     });
 
+    $('.navbar-toggle').on('click', function() {
+        $('.navbar-nav').slideToggle(700);
+    });
+
 })(jQuery);

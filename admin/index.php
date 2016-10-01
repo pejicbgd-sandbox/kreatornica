@@ -70,7 +70,7 @@
         </div>
 
         <!--logo start-->
-        <a href="index.html" class="logo">Club <span class="lite">Kreatornica</span></a>
+        <a href="../index.php" class="logo">Club <span class="lite">Kreatornica</span></a>
         <!--logo end-->
     </header>
 

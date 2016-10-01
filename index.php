@@ -33,7 +33,7 @@
 
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container navigation-wrapper">
         <?php echo $twig->render('navbar.twig', $consts); ?>
 </nav>
 

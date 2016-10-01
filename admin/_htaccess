@@ -1,4 +1,4 @@
 AuthType Basic
 AuthName "Restricted Area"
-AuthUserFile /wamp/www/kreatornica/dashboard/.htpasswd
+AuthUserFile /admin/.htpasswd
 require valid-user
