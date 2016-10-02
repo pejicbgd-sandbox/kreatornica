@@ -29,7 +29,7 @@
         });
     });
 
-    $('.member-update').on('click', function() {
+    $('#member-table').on('click', '.member-update', function() {
         var $this = $(this),
             memberId = $this.data('member'),
             $modal = $('#member-update'),
