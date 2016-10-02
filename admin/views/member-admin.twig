@@ -15,7 +15,17 @@
                 Lista članova
             </header>
 
-            <table class="table table-striped table-advance table-hover">
+            <p>&nbsp;</p>
+            <label class="control-label col-lg-2 member-label" for="language" >Izaberi jezik: </label>
+            <div class="col-lg-10">
+                <select class="form-control m-bot15" name="language" id="member-language">
+                    <option value="sr">Srpski</option>
+                    <option value="sk">Slovački</option>
+                    <option value="en">Engleski</option>
+                </select>
+            </div>
+
+            <table class="table table-striped table-advance table-hover" id="member-table">
                 <tbody>
                 <tr>
                     <th class="col-lg-1 text-center"><i class="icon_profile"></i> Ime i prezime</th>
@@ -26,7 +36,7 @@
                     <th class="col-lg-2 text-center"><i class="icon_cogs"></i> Uredi</th>
                 </tr>
                 {% for member in members %}
-                    <tr>
+                    <tr class="single">
                         <td>{{ member.name }}</td>
                         <td>{{ member.created_date }}</td>
                         <td>{{ member.text }}</td>

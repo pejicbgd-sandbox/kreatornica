@@ -4,16 +4,14 @@
 
 if(!defined('ROOT_PATH'))
 {
-    // define('ROOT_PATH', '/var/www/html/kreatornica/');
-    //define('ROOT_PATH', '/home/kreatorn/public_html/');
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    define('ROOT_PATH', '/var/www/html/kreatornica/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
 
 $config = require ROOT_PATH . "helpers/config.php";
 
-$helper = new Helper;
+$helper = new Helper(ROOT_PATH );
 //$db = DB::getInstance('kreatornica.com', 'kreatorn_admin', 'iuMT?.SPzM5v', 'kreatorn_ica');
 
 $lang = $helper->getActiveLanguage();

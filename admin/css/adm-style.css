@@ -4964,3 +4964,7 @@ span.customSelect.changed {
 #images-holder img:hover {
     opacity: 0.8;
 }
+.member-label {
+    font-weight: normal;
+    padding-top: 5px;
+}

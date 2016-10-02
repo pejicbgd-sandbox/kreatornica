@@ -1,7 +1,7 @@
 <?php
 
-define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
-// define ('ROOT_PATH', '/var/www/html/kreatornica/');
+// define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+define ('ROOT_PATH', '/var/www/html/kreatornica/');
 // define ('ROOT_PATH', '/home/kreatorn/public_html/');
 require ROOT_PATH . "vendor/autoload.php";
 
@@ -219,6 +219,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             $lang = filter_var($_POST['lang'], FILTER_SANITIZE_STRING);
 
             echo json_encode($helper->getProjectPopupInfo($project_id, $lang), true); die;
+        }
+        elseif($action == 'getMembersData')
+        {
+            $lang = filter_var($_POST['lang'], FILTER_SANITIZE_STRING);
+
+            echo json_encode($helper->getMembersContent($lang)); die;
         }
     }
     else

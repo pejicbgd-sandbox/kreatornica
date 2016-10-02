@@ -268,16 +268,16 @@ class DB
             $query .= $this->_leftJoin . "\n\t";
         }
 
-        if($this->_groupBy)
-        {
-            $query .= $this->_groupBy . "\n\t";
-        }
-
         $query .= $this->_where . "\n\t";
 
         if($this->_between)
         {
             $query .= $this->_between . "\n\t";
+        }
+
+        if($this->_groupBy)
+        {
+            $query .= $this->_groupBy . "\n\t";
         }
 
         return $query;

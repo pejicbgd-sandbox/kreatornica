@@ -4,11 +4,9 @@ class Helper
 {
     private $_rootPath;
 
-    public function __construct()
+    public function __construct($path)
     {
-        $this->_rootPath = 'C:/xampp/htdocs/kreatornica/';
-        // $this->_rootPath = '/var/www/html/kreatornica/';
-        // $this->_rootPath = '/home/kreatorn/public_html/';
+        $this->_rootPath = $path;
     }
 
     public function getActiveLanguage()
@@ -45,14 +43,17 @@ class Helper
         return $db->getSelected();
     }
 
-    public function getMembersContent()
+    public function getMembersContent($lang)
     {
+        $where['mb.lang'] = $lang;
+
         $db = new DB;
         $members = [];
 
         $db->select()
             ->from('members m')
             ->leftJoin(['member_bio mb ON m.member_id = mb.member_id'])
+            ->where($where)
             ->groupBy('m.member_id')
             ->run();
 
@@ -125,7 +126,7 @@ class Helper
         $consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
         $consts['aboutUs'] = $about_us[0]['text'];
 
-        $members = $this->getMembersContent();
+        $members = $this->getMembersContent($lang);
         $consts['members'] = $members;
 
         $projects = $this->getProjectsContent($lang);
