@@ -28,6 +28,11 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+        header {
+            background-image: url(assets/img/home/<?php echo  $consts['homeContent'][0]['naslovna']; ?>);
+        }
+    </style>
 </head>
 <body id="page-top" class="index">
 

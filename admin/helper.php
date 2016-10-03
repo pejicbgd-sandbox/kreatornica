@@ -4,13 +4,14 @@
 
 if(!defined('ROOT_PATH'))
 {
-    define('ROOT_PATH', '/var/www/html/kreatornica/');
+    //define('ROOT_PATH', '/var/www/html/kreatornica/');
+    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
 //require '/home/kreatorn/public_html/vendor/autoload.php/';
 
-$helper = new Helper();
+$helper = new Helper(ROOT_PATH);
 
 $pages = array('home-admin', 'about-admin', 'member-admin', 'project-admin', 'gallery-admin', 'contact-admin', 'footer-admin');
 $page = 'home-admin';

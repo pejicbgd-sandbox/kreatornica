@@ -4,7 +4,8 @@
 
 if(!defined('ROOT_PATH'))
 {
-    define('ROOT_PATH', '/var/www/html/kreatornica/');
+    //define('ROOT_PATH', '/var/www/html/kreatornica/');
+    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
@@ -17,6 +18,9 @@ $helper = new Helper(ROOT_PATH );
 $lang = $helper->getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
 $consts['rootPath'] = ROOT_PATH;
+
+$homeContent = $helper->getHomeContent();
+$consts['homeContent'] = $homeContent;
 
 $about_us = $helper->getAboutUsContent($lang);
 $consts['aboutUsTitle'] = $about_us[0]['title'];

@@ -31,6 +31,17 @@ class Helper
         return $lang;
     }
 
+    public function getHomeContent()
+    {
+        $db = new DB();
+
+        $db->select()
+            ->from('home')
+            ->run();
+
+        return $db->getSelected();
+    }
+
     public function getAboutUsContent($lang)
     {
         $db = new DB();
@@ -43,7 +54,7 @@ class Helper
         return $db->getSelected();
     }
 
-    public function getMembersContent($lang)
+    public function getMembersContent($lang = 'sr')
     {
         $where['mb.lang'] = $lang;
 

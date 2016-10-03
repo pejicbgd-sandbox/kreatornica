@@ -381,31 +381,35 @@
                 url: endPoint,
                 data: 'action=getMembersData&pId=' + '&lang=' + lang,
                 success: function(res) {
-                    var response = JSON.parse(res),
+                    var response,
                         tempHtml = '',
                         i, length, email, telefon;
 
-                    _memberTable.find('.single').remove();
-                    for(i = 0, length = response.length; i < length; i++)
+                    if(res)
                     {
-                        email = response[i].email || '';
-                        telefon = response[i].telefon || '';
+                        response = JSON.parse(res);
+                        _memberTable.find('.single').remove();
+                        for(i = 0, length = response.length; i < length; i++)
+                        {
+                            email = response[i].email || '';
+                            telefon = response[i].telefon || '';
 
-                        tempHtml += '<tr class="single">';
-                        tempHtml += '<td>' + response[i].name + '</td>';
-                        tempHtml += '<td>1' + response[i].created_date + '</td>';
-                        tempHtml += '<td>' + response[i].text + '</td>';
-                        tempHtml += '<td>' + email + '</td>';
-                        tempHtml += '<td>' + telefon + '</td>';
-                        tempHtml += '<td class="text-center">';
-                        tempHtml += '<div class="btn-group">';
-                        tempHtml += '<a href="#member-update" class="btn btn-primary member-update" data-toggle="modal" data-member="' + response[i].member_id + '" data-lang="' + lang + '"><i class="icon_plus_alt2"></i></a>';
-                        tempHtml += '<a href="#member-delete" class="btn btn-danger member-delete" data-member="' + response[i].member_id + '" data-toggle="modal"><i class="icon_close_alt2"></i></a>';
-                        tempHtml += '</div>';
-                        tempHtml += '</td>';
-                        tempHtml += '</tr>';
+                            tempHtml += '<tr class="single">';
+                            tempHtml += '<td>' + response[i].name + '</td>';
+                            tempHtml += '<td>1' + response[i].created_date + '</td>';
+                            tempHtml += '<td>' + response[i].text + '</td>';
+                            tempHtml += '<td>' + email + '</td>';
+                            tempHtml += '<td>' + telefon + '</td>';
+                            tempHtml += '<td class="text-center">';
+                            tempHtml += '<div class="btn-group">';
+                            tempHtml += '<a href="#member-update" class="btn btn-primary member-update" data-toggle="modal" data-member="' + response[i].member_id + '" data-lang="' + lang + '"><i class="icon_plus_alt2"></i></a>';
+                            tempHtml += '<a href="#member-delete" class="btn btn-danger member-delete" data-member="' + response[i].member_id + '" data-toggle="modal"><i class="icon_close_alt2"></i></a>';
+                            tempHtml += '</div>';
+                            tempHtml += '</td>';
+                            tempHtml += '</tr>';
+                        }
+                        _memberTable.find('tbody').append(tempHtml);
                     }
-                    _memberTable.find('tbody').append(tempHtml);
                 }
             });
     });
