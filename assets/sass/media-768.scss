@@ -1,6 +1,35 @@
-@media(min-width:768px) {
+@media screen and (min-width:768px) {
+    header .intro-text {
+        padding-top: 300px;
+        padding-bottom: 200px;
+    }
 
-    .timeline:before {
+    header .intro-text .intro-lead-in {
+        margin-bottom: 25px;
+        font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 40px;
+        font-style: italic;
+        line-height: 40px;
+    }
+
+    header .intro-text .intro-heading {
+        margin-bottom: 50px;
+        text-transform: uppercase;
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 75px;
+        font-weight: 700;
+        line-height: 75px;
+    }
+
+    section {
+        padding: 150px 0;
+    }
+
+    .portfolio-item {
+        margin: 0 0 30px;
+    }
+
+        .timeline:before {
         left: 50%;
     }
 
@@ -34,7 +63,46 @@
         padding: 0 30px 20px 20px;
         text-align: left;
     }
-    section {
-        padding: 150px 0;
+}
+
+@media screen and (max-width:768px) {
+        .navbar-default {
+        padding: 25px 0;
+        border: 0;
+        background-color: transparent;
+        -webkit-transition: padding .3s;
+        -moz-transition: padding .3s;
+        transition: padding .3s;
     }
+
+    .navbar-default .navbar-brand {
+        font-size: 2em;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s;
+    }
+
+    .navbar-default .navbar-nav>.active>a {
+        border-radius: 3px;
+    }
+
+    .navbar-default.navbar-shrink {
+        padding: 10px 0;
+        background-color: #222;
+    }
+
+    .navbar-default.navbar-shrink  {
+       font-size: 1.1em;
+    }
+
+    .language-icons {
+        float:right;
+        margin: 0px auto;
+        margin-top: -60px;
+        right:-10%;
+        }
+     .language-icons ul li{
+         display: block;
+         padding: 5px 0px;
+     }
 }
