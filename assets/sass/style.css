@@ -260,10 +260,10 @@ header .intro-text .intro-heading {
   line-height: 50px; }
 
 section {
-  padding: 100px 0; }
+  padding: 100px 0 0; }
 
 section h2.section-heading {
-  margin-top: 0;
+  margin-top: 80px;
   margin-bottom: 15px;
   font-size: 40px; }
 
@@ -695,9 +695,6 @@ body {
     font-size: 75px;
     font-weight: 700;
     line-height: 75px; }
-
-  section {
-    padding: 150px 0; }
 
   .portfolio-item {
     margin: 0 0 30px; }
