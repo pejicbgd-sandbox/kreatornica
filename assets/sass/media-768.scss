@@ -1,4 +1,9 @@
 @media screen and (min-width:768px) {
+    .navbar-nav {
+        float: right;
+        padding-top: 15px;
+    }
+
     header .intro-text {
         padding-top: 300px;
         padding-bottom: 200px;
@@ -25,7 +30,7 @@
         margin: 0 0 30px;
     }
 
-        .timeline:before {
+    .timeline:before {
         left: 50%;
     }
 
@@ -62,43 +67,13 @@
 }
 
 @media screen and (max-width:768px) {
-        .navbar-default {
-        padding: 25px 0;
-        border: 0;
-        background-color: transparent;
+    .navbar-default {
+        padding: 12px 0;
         -webkit-transition: padding .3s;
         -moz-transition: padding .3s;
         transition: padding .3s;
     }
-
-    .navbar-default .navbar-brand {
-        font-size: 2em;
-        -webkit-transition: all .3s;
-        -moz-transition: all .3s;
-        transition: all .3s;
+    .logo-img {
+        margin: 0;
     }
-
-    .navbar-default .navbar-nav>.active>a {
-        border-radius: 3px;
-    }
-
-    .navbar-default.navbar-shrink {
-        padding: 10px 0;
-        background-color: #222;
-    }
-
-    .navbar-default.navbar-shrink  {
-       font-size: 1.1em;
-    }
-
-    .language-icons {
-        float:right;
-        margin: 0px auto;
-        margin-top: -60px;
-        right:-10%;
-        }
-     .language-icons ul li{
-         display: block;
-         padding: 5px 0px;
-     }
 }

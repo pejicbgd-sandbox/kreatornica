@@ -1,4 +1,8 @@
 @media screen and (min-width:993px) {
+    .navbar-nav {
+        display: inline-block;
+    }
+
     .timeline>li {
         min-height: 150px;
     }
@@ -24,5 +28,25 @@
     }
 }
 @media screen and (max-width:992px) {
+    .navigation-wrapper {
+        position: relative;
+    }
 
+    .navbar-nav {
+        display: none;
+        width: 100%;
+        margin: 15px 0px 0px;
+    }
+    .navbar-nav li {
+        display: block;
+        width: 100%;
+    }
+    .navbar-toggle {
+        display: inline-block;
+    }
+    .language-icons {
+        position: absolute;
+        top: -15px;
+        right: 85px;
+    }
 }
