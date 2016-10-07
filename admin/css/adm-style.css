@@ -4961,7 +4961,7 @@ span.customSelect.changed {
     display: inline-block;
     cursor: pointer;
 }
-#images-holder img:hover {
+#images-holder img:hover{
     opacity: 0.8;
 }
 .member-label {
