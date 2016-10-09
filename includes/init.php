@@ -4,8 +4,8 @@
 
 if(!defined('ROOT_PATH'))
 {
-    //define('ROOT_PATH', '/var/www/html/kreatornica/');
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    define('ROOT_PATH', '/var/www/html/kreatornica/');
+    //define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";

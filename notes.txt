@@ -1,2 +1,0 @@
-C:/xampp/htdocs/kreatornica/assets/img/projects/
-C:/xampp/htdocs/kreatornica/assets/img/gallery/ PROMENI GDE NADJES (Helper.php)

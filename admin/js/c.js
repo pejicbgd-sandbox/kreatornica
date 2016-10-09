@@ -110,33 +110,36 @@
     });
 
     $('#project, #language').on('change', function() {
-        var $projectForm = $('#project-form');
-        $projectForm.find('input[name=action]').val('getProjectInfo');
-        $projectForm.find('#project-name-wrapper').find('input').val('').end().hide();
+        var _projectForm = $('#project-form');
+        _projectForm.find('input[name=action]').val('getProjectInfo');
+        _projectForm.find('#project-name-wrapper').find('input').val('').end().hide();
 
         $.ajax({
             method: "POST",
             url: endPoint,
-            data: new FormData($projectForm[0]),
+            data: new FormData(_projectForm[0]),
             contentType: false,
             processData: false,
             success: function(res) {
-                var response;
+                var response, gallery_id;
 
                 if(typeof res !== undefined)
                 {
                     response = JSON.parse(res);
                     if(response.length)
                     {
-                        $projectForm.find('#project-title').val(response[0].title);
-                        $projectForm.find('#project-text').val(response[0].text);
-                        $projectForm.find('#project-content').val(response[0].content);
+                        gallery_id = response[0].gallery_id  || 0;
+                        _projectForm.find('#project-title').val(response[0].title);
+                        _projectForm.find('#project-text').val(response[0].text);
+                        _projectForm.find('#project-content').val(response[0].content);
+                        _projectForm.find('#project-gallery-list').find('input[value="' + gallery_id + '"]').parent().trigger('click');
                     }
                     else
                     {
-                        $projectForm.find('#project-title').val('');
-                        $projectForm.find('#project-text').val('');
-                        $projectForm.find('#project-content').val('');
+                        _projectForm.projectForm.find('#project-title').val('');
+                        _projectForm.find('#project-text').val('');
+                        _projectForm.find('#project-content').val('');
+                        _projectForm.find('#project-gallery-list').find('input[value=0]').parent().trigger('click');
                     }
                 }
             }
@@ -416,6 +419,10 @@
 
     $('.navbar-toggle').on('click', function() {
         $('.navbar-nav').slideToggle(700);
+    });
+
+    $('#project-review').on('click', function(e) {
+        e.preventDefault();
     });
 
 })(jQuery);

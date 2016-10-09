@@ -4,8 +4,8 @@
 
 if(!defined('ROOT_PATH'))
 {
-    //define('ROOT_PATH', '/var/www/html/kreatornica/');
-    define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    define('ROOT_PATH', '/var/www/html/kreatornica/');
+    //define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
@@ -29,7 +29,7 @@ $twig->addExtension(new Twig_Extension_Debug());
 
 $info = [];
 $info = $helper->returnBulked('sr');
-//var_dump($info); die;
+//var_dump($info['galleries']); die;
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 

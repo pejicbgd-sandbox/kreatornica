@@ -1,7 +1,7 @@
 <?php
 
-define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
-//define ('ROOT_PATH', '/var/www/html/kreatornica/');
+//define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+define ('ROOT_PATH', '/var/www/html/kreatornica/');
 // define ('ROOT_PATH', '/home/kreatorn/public_html/');
 require ROOT_PATH . "vendor/autoload.php";
 
@@ -168,8 +168,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
             $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
             $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+            $gallery_id = filter_var($_POST['project_gallery'], FILTER_SANITIZE_NUMBER_INT);
 
-            echo $helper->updateProjectData($project_id, $data['lang'], $data); die;
+            echo $helper->updateProjectData($project_id, $data['lang'], $data, $gallery_id); die;
         }
         elseif($action == 'saveNewProject')
         {
