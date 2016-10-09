@@ -1,20 +1,31 @@
 @media screen and (min-width:993px) {
     .navbar-nav {
         display: inline-block;
+        float: right;
+        padding-top: 15px;
+    }
+
+    .timeline:before {
+        left: 50%;
     }
 
     .timeline>li {
         min-height: 150px;
+        margin-bottom: 100px;
     }
 
     .timeline>li .timeline-panel {
-        padding: 0 20px 20px;
+        float: left;
+        width: 41%;
+        padding: 0 20px 20px 30px;
+        text-align: right;
     }
 
     .timeline>li .timeline-image {
         width: 150px;
         height: 150px;
         margin-left: -75px;
+        left: 50%;
     }
 
     .timeline>li .timeline-image h4 {
@@ -25,6 +36,14 @@
 
     .timeline>li.timeline-inverted>.timeline-panel {
         padding: 0 20px 20px;
+        float: right;
+        text-align: left;
+    }
+
+    
+
+    .portfolio-item {
+        margin: 0 0 30px;
     }
 }
 @media screen and (max-width:992px) {
@@ -48,5 +67,14 @@
         position: absolute;
         top: -15px;
         right: 85px;
+    }
+    .navbar-default {
+        padding: 12px 0;
+        -webkit-transition: padding .3s;
+        -moz-transition: padding .3s;
+        transition: padding .3s;
+    }
+    .logo-img {
+        margin: 0;
     }
 }
