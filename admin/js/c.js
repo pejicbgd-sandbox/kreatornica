@@ -353,11 +353,18 @@
     if($.fancybox)
     {
         $('.fancybox').fancybox({
-    		'hideOnContentClick': true
+    		'hideOnContentClick': true,
+            helpers : { 
+                overlay: {
+                    css : {
+                        'background' : 'rgba(0, 0, 0, 0.75)'
+                    }
+                }
+            }
     	});
     }
 
-    $('.portfolio-link').on('click', function() {
+    $('.project-popup-link').on('click', function() {
         var projectId = $(this).data('projectId'),
             lang = $(this).data('lang'),
             _modal = $('#projectModal1');
@@ -375,6 +382,7 @@
                         _modal.find('#project-title').text(response[0].project_name);
                         _modal.find('.project-subtitle').text(response[0].title);
                         _modal.find('.project-content').text(response[0].content);
+                        _modal.find('#project-review').data('gallery', response[0].gallery_id);
                     }
                 }
             });
@@ -429,6 +437,12 @@
     });
 
     $('#project-review').on('click', function(e) {
+        var _target = $('a[rel="gallery1"]'),
+            _modal = $('#projectModal1');
+
+        _modal.modal('toggle');
+        _target.trigger('click');
+
         e.preventDefault();
     });
 
