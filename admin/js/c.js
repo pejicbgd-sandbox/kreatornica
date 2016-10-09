@@ -121,20 +121,23 @@
             contentType: false,
             processData: false,
             success: function(res) {
-                var response, imagesHtml;
+                var response, gallery_id;
 
                 if(typeof res !== undefined)
                 {
                     response = JSON.parse(res);
                     if(response.length)
                     {
+                        gallery_id = response[0].gallery_id  || 0;
+                        imagesHtml = '<img src="../assets/img/projects/' + response[0].title_img + '" class="gallery-img" alt="" width="150" />';
+
                         _projectForm.find('#project-title').val(response[0].title);
                         _projectForm.find('#project-text').val(response[0].text);
                         _projectForm.find('#project-content').val(response[0].content);
 
-                        imagesHtml = '<img src="../assets/img/projects/' + response[0].title_img + '" class="gallery-img" alt="" width="150" />';
                         _projectForm.find('#project-image-wrapper').show();
                         _projectForm.find('#project-bilboard').html(imagesHtml);
+                        _projectForm.find('#project-gallery-list').find('input[value="' + gallery_id + '"]').parent().trigger('click');
                     }
                     else
                     {
@@ -143,6 +146,7 @@
                         _projectForm.find('#project-content').val('');
                         _projectForm.find('#project-image-wrapper').hide();
                         _projectForm.find('#project-bilboard').html('');
+                        _projectForm.find('#project-gallery-list').find('input[value=0]').parent().trigger('click');
                     }
                 }
             }
@@ -422,6 +426,10 @@
 
     $('.navbar-toggle').on('click', function() {
         $('.navbar-nav').slideToggle(700);
+    });
+
+    $('#project-review').on('click', function(e) {
+        e.preventDefault();
     });
 
 })(jQuery);
