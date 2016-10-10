@@ -1,7 +1,7 @@
 <?php
 
-define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
-//define ('ROOT_PATH', '/var/www/html/kreatornica/');
+//define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+define ('ROOT_PATH', '/var/www/html/kreatornica/');
 // define ('ROOT_PATH', '/home/kreatorn/public_html/');
 require ROOT_PATH . "vendor/autoload.php";
 
@@ -102,7 +102,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                 {
                     $filename = time() .'-' .$_FILES["image"]["name"];
 
-                    if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/members/' .$filename))
+                    if(move_uploaded_file($_FILES["image"]["tmp_name"], '/home/kreatorn/public_html/assets/img/members/' .$filename))
                     {
                         $member_data['member_img'] = $filename;
                     }

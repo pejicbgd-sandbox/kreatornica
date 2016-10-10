@@ -76,17 +76,17 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-12 text-center">
                     <span class="copyright">Copyright &copy; Club Kreatornica 2015</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-12">
                     <ul class="list-inline social-buttons">
                         <li>
                             <a href="https://www.facebook.com/kreatornica.artclub?fref=ts" target="_blank">f</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-12 text-center">
                     <ul class="list-inline quicklinks">
                         <li><a href="#about_us">O nama</a>
                         </li>

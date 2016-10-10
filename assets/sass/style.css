@@ -221,8 +221,9 @@ fieldset[disabled] .btn-xl.active {
 
 .social-buttons li {
   margin: 0 auto;
-  width: 100px;
-  display: block; }
+  width: 50px;
+  display: block;
+  text-align: center; }
 
 .quicklinks li a {
   transition: all 0.18s ease-in; }
@@ -258,7 +259,7 @@ header .intro-text .intro-heading {
   line-height: 75px; }
 
 section {
-  padding: 100px 0 0; }
+  padding: 100px 0; }
 
 section h2.section-heading {
   margin-top: 80px;
@@ -494,7 +495,8 @@ section#contact {
   background-color: #222;
   background-image: url(../img/map-image.png);
   background-position: center;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 section#contact .section-heading {
   color: #fff; }
@@ -573,8 +575,7 @@ ul.social-buttons li a {
   background-color: #222;
   -webkit-transition: all .3s;
   -moz-transition: all .3s;
-  transition: all .3s;
-  text-indent: 17px; }
+  transition: all .3s; }
 
 ul.social-buttons li a:hover,
 ul.social-buttons li a:focus,
@@ -739,7 +740,22 @@ body {
     transition: padding .3s; }
 
   .logo-img {
-    margin: 0; } }
+    margin: 0; }
+
+  header .intro-text .intro-heading {
+    font-size: 50px; }
+
+  header .intro-text .intro-lead-in {
+    font-size: 36px; }
+
+  .btn-xl {
+    padding: 15px 35px; }
+
+  #contactForm {
+    margin-bottom: 60px; }
+
+  .list-inline {
+    margin-top: 15px; } }
 @media screen and (min-width: 1200px) {
   .timeline > li {
     min-height: 170px; }

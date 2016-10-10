@@ -269,8 +269,9 @@ fieldset[disabled] .btn-xl.active {
 
 .social-buttons li {
     margin: 0 auto;
-    width: 100px;
+    width: 50px;
     display: block;
+    text-align: center;
 }
 
 .quicklinks li a {
@@ -312,7 +313,7 @@ header .intro-text .intro-heading {
 }
 
 section {
-    padding: 100px 0 0;
+    padding: 100px 0;
 }
 
 section h2.section-heading {
@@ -600,6 +601,7 @@ section#contact {
     background-image: url(../img/map-image.png);
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -661,6 +663,7 @@ section#contact .text-danger {
     color: #e74c3c;
 }
 
+
 footer {
     padding: 25px 0;
 
@@ -699,7 +702,6 @@ ul.social-buttons li a {
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     transition: all .3s;
-    text-indent: 17px;
 }
 
 ul.social-buttons li a:hover,
