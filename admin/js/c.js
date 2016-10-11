@@ -446,4 +446,55 @@
         e.preventDefault();
     });
 
+    $('#contact-form input, #contact-form textarea').on('keydown', function(e) {
+        var _this = $(this);
+
+        if(_this.hasClass('invalid')) {
+            _this.removeClass('invalid').off('keydown');
+        }
+    });
+
+    $('#contact-form').on('submit', function(e) {
+        var _this = $(this),
+            _name = _this.find('input[name="name"]'),
+            _email = _this.find('input[name="email"]'),
+            _phone = _this.find('input[name="phone"]'),
+            _message = _this.find('textarea'),
+            invalid = false;
+
+        e.preventDefault();
+
+        if(_name.val() == '') {
+            _name.addClass('invalid');
+            invalid = true;
+        }
+
+        if(_email.val() == '') {
+            _email.addClass('invalid');
+            invalid = true;
+        }
+
+        if(_phone.val() == '') {
+            _phone.addClass('invalid');
+            invalid = true;
+        }
+
+        if(_message.val() == '') {
+            _message.addClass('invalid');
+            invalid = true;
+        }
+
+        if(!invalid) {
+            $.ajax({
+                method: 'POST',
+                url: 'contact_me.php',
+                data: $(this).serialize(),
+                success: function(res) {
+                    
+                }
+            });
+        }
+        
+    });
+
 })(jQuery);

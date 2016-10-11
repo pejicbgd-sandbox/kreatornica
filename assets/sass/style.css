@@ -506,10 +506,10 @@ section#contact .form-group {
 
 section#contact .form-group input,
 section#contact .form-group textarea {
-  padding: 20px; }
+  padding: 29px; }
 
 section#contact .form-group input.form-control {
-  height: auto; }
+  height: 30px; }
 
 section#contact .form-group textarea.form-control {
   height: 236px; }
@@ -674,6 +674,15 @@ body {
 
 .modal-open .modal {
   padding-right: 0px !important; }
+
+#contact-form input,
+#contact-form textarea {
+  transition: all 0.4s ease-in;
+  border: 2px solid transparent; }
+
+input.invalid,
+textarea.invalid {
+  border: 2px solid #e74c3c !important; }
 
 @media screen and (min-width: 993px) {
   .navbar-nav {
