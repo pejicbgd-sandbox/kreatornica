@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-    var endPoint = 'http://localhost/kreatornica/admin/requests.php';
+    var endPoint = 'admin/requests.php';
 
     $('#save-about-us').on('click', function(e) {
         e.preventDefault();
@@ -121,7 +121,7 @@
             contentType: false,
             processData: false,
             success: function(res) {
-                var response, gallery_id;
+                var response, gallery_id, imagesHtml;
 
                 if(typeof res !== undefined)
                 {
@@ -357,7 +357,7 @@
             helpers : { 
                 overlay: {
                     css : {
-                        'background' : 'rgba(0, 0, 0, 0.75)'
+                        background : 'rgba(0, 0, 0, 0.75)'
                     }
                 }
             }
@@ -382,12 +382,13 @@
                         _modal.find('#project-title').text(response[0].project_name);
                         _modal.find('.project-subtitle').text(response[0].title);
                         _modal.find('.project-content').text(response[0].content);
-                        _modal.find('#project-review').data('gallery', response[0].gallery_id);
+                        _modal.find('.project-gallery_id').val(response[0].gallery_id);
                     }
                 }
             });
 
     });
+
 
     $('#member-language').on('change', function() {
         var _this = $(this),
@@ -437,8 +438,9 @@
     });
 
     $('#project-review').on('click', function(e) {
-        var _target = $('a[rel="gallery1"]'),
-            _modal = $('#projectModal1');
+        var _modal = $('#projectModal1'),
+            _target = $('a[rel=gallery'+ _modal.find('.project-gallery_id').val() +']');
+            
 
         _modal.modal('toggle');
         _target.trigger('click');
@@ -461,8 +463,6 @@
             _phone = _this.find('input[name="phone"]'),
             _message = _this.find('textarea'),
             invalid = false;
-
-        e.preventDefault();
 
         if(_name.val() == '') {
             _name.addClass('invalid');
@@ -494,7 +494,15 @@
                 }
             });
         }
+
+        return false;
         
+    });
+
+    $(window).on('resize', function(e) {
+        if($(window).width() > 993) {
+            $('.navbar-nav').show();
+        }
     });
 
 })(jQuery);

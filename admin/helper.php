@@ -6,10 +6,10 @@ if(!defined('ROOT_PATH'))
 {
     define('ROOT_PATH', '/var/www/html/kreatornica/');
     //define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    //define('ROOT_PATH', '/home/kreatorn/public_html/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
-//require '/home/kreatorn/public_html/vendor/autoload.php/';
 
 $helper = new Helper(ROOT_PATH);
 

@@ -4,6 +4,9 @@
         $('html, body').stop().animate({
             scrollTop: $($anchor.attr('href')).offset().top
         }, 1500, 'easeInOutExpo');
+        if($('.navbar-toggle').is(':visible')) {
+            $('.navbar-nav').slideUp(700);
+        }
         event.preventDefault();
     });
 
