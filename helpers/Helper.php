@@ -31,6 +31,17 @@ class Helper
         return $lang;
     }
 
+    public function getHomeContent()
+    {
+        $db = new DB();
+
+        $db->select()
+            ->from('home')
+            ->run();
+
+        return $db->getSelected();
+    }
+
     public function getAboutUsContent($lang)
     {
         $db = new DB();
@@ -43,7 +54,7 @@ class Helper
         return $db->getSelected();
     }
 
-    public function getMembersContent($lang)
+    public function getMembersContent($lang = 'sr')
     {
         $where['mb.lang'] = $lang;
 
@@ -210,7 +221,7 @@ class Helper
         return $db->getAffected();
     }
 
-    public function updateProjectData($project_id, $lang, $project_data)
+    public function updateProjectData($project_id, $lang, $project_data, $gallery_id)
     {
         $where['project_id'] = $project_id;
         $where['lang'] = $lang;
@@ -249,14 +260,6 @@ class Helper
                 ->run();
 
             unset($where['lang']);
-
-            if(isset($data))
-            {
-                $db = new DB();
-                $db->update('projects', $data)
-                    ->where($where)
-                    ->run();
-            }
         }
         else
         {
@@ -265,6 +268,18 @@ class Helper
             $db->insertInto('projects_info', $project_data)
                 ->run();
         }
+
+        if($gallery_id == 0 || $gallery_id == '')
+        {
+            $gallery_id = null;
+        }
+
+        $data['gallery_id'] = $gallery_id;
+
+        $db = new DB();
+        $db->update('projects', $data)
+            ->where($where)
+            ->run();
 
         return $db->getAffected();
     }

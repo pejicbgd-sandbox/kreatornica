@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-    var endPoint = 'http://localhost/kreatornica/admin/requests.php';
+    var endPoint = 'admin/requests.php';
 
     $('#save-about-us').on('click', function(e) {
         e.preventDefault();
@@ -110,33 +110,43 @@
     });
 
     $('#project, #language').on('change', function() {
-        var $projectForm = $('#project-form');
-        $projectForm.find('input[name=action]').val('getProjectInfo');
-        $projectForm.find('#project-name-wrapper').find('input').val('').end().hide();
+        var _projectForm = $('#project-form');
+        _projectForm.find('input[name=action]').val('getProjectInfo');
+        _projectForm.find('#project-name-wrapper').find('input').val('').end().hide();
 
         $.ajax({
             method: "POST",
             url: endPoint,
-            data: new FormData($projectForm[0]),
+            data: new FormData(_projectForm[0]),
             contentType: false,
             processData: false,
             success: function(res) {
-                var response;
+                var response, gallery_id, imagesHtml;
 
                 if(typeof res !== undefined)
                 {
                     response = JSON.parse(res);
                     if(response.length)
                     {
-                        $projectForm.find('#project-title').val(response[0].title);
-                        $projectForm.find('#project-text').val(response[0].text);
-                        $projectForm.find('#project-content').val(response[0].content);
+                        gallery_id = response[0].gallery_id  || 0;
+                        imagesHtml = '<img src="../assets/img/projects/' + response[0].title_img + '" class="gallery-img" alt="" width="150" />';
+
+                        _projectForm.find('#project-title').val(response[0].title);
+                        _projectForm.find('#project-text').val(response[0].text);
+                        _projectForm.find('#project-content').val(response[0].content);
+
+                        _projectForm.find('#project-image-wrapper').show();
+                        _projectForm.find('#project-bilboard').html(imagesHtml);
+                        _projectForm.find('#project-gallery-list').find('input[value="' + gallery_id + '"]').parent().trigger('click');
                     }
                     else
                     {
-                        $projectForm.find('#project-title').val('');
-                        $projectForm.find('#project-text').val('');
-                        $projectForm.find('#project-content').val('');
+                        _projectForm.find('#project-title').val('');
+                        _projectForm.find('#project-text').val('');
+                        _projectForm.find('#project-content').val('');
+                        _projectForm.find('#project-image-wrapper').hide();
+                        _projectForm.find('#project-bilboard').html('');
+                        _projectForm.find('#project-gallery-list').find('input[value=0]').parent().trigger('click');
                     }
                 }
             }
@@ -343,11 +353,18 @@
     if($.fancybox)
     {
         $('.fancybox').fancybox({
-    		'hideOnContentClick': true
+    		'hideOnContentClick': true,
+            helpers : { 
+                overlay: {
+                    css : {
+                        background : 'rgba(0, 0, 0, 0.75)'
+                    }
+                }
+            }
     	});
     }
 
-    $('.portfolio-link').on('click', function() {
+    $('.project-popup-link').on('click', function() {
         var projectId = $(this).data('projectId'),
             lang = $(this).data('lang'),
             _modal = $('#projectModal1');
@@ -365,11 +382,13 @@
                         _modal.find('#project-title').text(response[0].project_name);
                         _modal.find('.project-subtitle').text(response[0].title);
                         _modal.find('.project-content').text(response[0].content);
+                        _modal.find('.project-gallery_id').val(response[0].gallery_id);
                     }
                 }
             });
 
     });
+
 
     $('#member-language').on('change', function() {
         var _this = $(this),
@@ -381,37 +400,109 @@
                 url: endPoint,
                 data: 'action=getMembersData&pId=' + '&lang=' + lang,
                 success: function(res) {
-                    var response = JSON.parse(res),
+                    var response,
                         tempHtml = '',
                         i, length, email, telefon;
 
-                    _memberTable.find('.single').remove();
-                    for(i = 0, length = response.length; i < length; i++)
+                    if(res)
                     {
-                        email = response[i].email || '';
-                        telefon = response[i].telefon || '';
+                        response = JSON.parse(res);
+                        _memberTable.find('.single').remove();
+                        for(i = 0, length = response.length; i < length; i++)
+                        {
+                            email = response[i].email || '';
+                            telefon = response[i].telefon || '';
 
-                        tempHtml += '<tr class="single">';
-                        tempHtml += '<td>' + response[i].name + '</td>';
-                        tempHtml += '<td>1' + response[i].created_date + '</td>';
-                        tempHtml += '<td>' + response[i].text + '</td>';
-                        tempHtml += '<td>' + email + '</td>';
-                        tempHtml += '<td>' + telefon + '</td>';
-                        tempHtml += '<td class="text-center">';
-                        tempHtml += '<div class="btn-group">';
-                        tempHtml += '<a href="#member-update" class="btn btn-primary member-update" data-toggle="modal" data-member="' + response[i].member_id + '" data-lang="' + lang + '"><i class="icon_plus_alt2"></i></a>';
-                        tempHtml += '<a href="#member-delete" class="btn btn-danger member-delete" data-member="' + response[i].member_id + '" data-toggle="modal"><i class="icon_close_alt2"></i></a>';
-                        tempHtml += '</div>';
-                        tempHtml += '</td>';
-                        tempHtml += '</tr>';
+                            tempHtml += '<tr class="single">';
+                            tempHtml += '<td>' + response[i].name + '</td>';
+                            tempHtml += '<td>1' + response[i].created_date + '</td>';
+                            tempHtml += '<td>' + response[i].text + '</td>';
+                            tempHtml += '<td>' + email + '</td>';
+                            tempHtml += '<td>' + telefon + '</td>';
+                            tempHtml += '<td class="text-center">';
+                            tempHtml += '<div class="btn-group">';
+                            tempHtml += '<a href="#member-update" class="btn btn-primary member-update" data-toggle="modal" data-member="' + response[i].member_id + '" data-lang="' + lang + '"><i class="icon_plus_alt2"></i></a>';
+                            tempHtml += '<a href="#member-delete" class="btn btn-danger member-delete" data-member="' + response[i].member_id + '" data-toggle="modal"><i class="icon_close_alt2"></i></a>';
+                            tempHtml += '</div>';
+                            tempHtml += '</td>';
+                            tempHtml += '</tr>';
+                        }
+                        _memberTable.find('tbody').append(tempHtml);
                     }
-                    _memberTable.find('tbody').append(tempHtml);
                 }
             });
     });
 
     $('.navbar-toggle').on('click', function() {
         $('.navbar-nav').slideToggle(700);
+    });
+
+    $('#project-review').on('click', function(e) {
+        var _modal = $('#projectModal1'),
+            _target = $('a[rel=gallery'+ _modal.find('.project-gallery_id').val() +']');
+            
+
+        _modal.modal('toggle');
+        _target.trigger('click');
+
+        e.preventDefault();
+    });
+
+    $('#contact-form input, #contact-form textarea').on('keydown', function(e) {
+        var _this = $(this);
+
+        if(_this.hasClass('invalid')) {
+            _this.removeClass('invalid').off('keydown');
+        }
+    });
+
+    $('#contact-form').on('submit', function(e) {
+        var _this = $(this),
+            _name = _this.find('input[name="name"]'),
+            _email = _this.find('input[name="email"]'),
+            _phone = _this.find('input[name="phone"]'),
+            _message = _this.find('textarea'),
+            invalid = false;
+
+        if(_name.val() == '') {
+            _name.addClass('invalid');
+            invalid = true;
+        }
+
+        if(_email.val() == '') {
+            _email.addClass('invalid');
+            invalid = true;
+        }
+
+        if(_phone.val() == '') {
+            _phone.addClass('invalid');
+            invalid = true;
+        }
+
+        if(_message.val() == '') {
+            _message.addClass('invalid');
+            invalid = true;
+        }
+
+        if(!invalid) {
+            $.ajax({
+                method: 'POST',
+                url: 'contact_me.php',
+                data: $(this).serialize(),
+                success: function(res) {
+                    
+                }
+            });
+        }
+
+        return false;
+        
+    });
+
+    $(window).on('resize', function(e) {
+        if($(window).width() > 993) {
+            $('.navbar-nav').show();
+        }
     });
 
 })(jQuery);

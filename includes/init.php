@@ -5,6 +5,8 @@
 if(!defined('ROOT_PATH'))
 {
     define('ROOT_PATH', '/var/www/html/kreatornica/');
+    //define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    //define('ROOT_PATH', '/home/kreatorn/public_html/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
@@ -18,12 +20,15 @@ $lang = $helper->getActiveLanguage();
 $consts = include 'lang/' . $lang . '.php';
 $consts['rootPath'] = ROOT_PATH;
 
+$homeContent = $helper->getHomeContent();
+$consts['homeContent'] = $homeContent;
+
 $about_us = $helper->getAboutUsContent($lang);
 $consts['aboutUsTitle'] = $about_us[0]['title'];
 $consts['aboutUsSubtitle'] = $about_us[0]['subtitle'];
 $consts['aboutUs'] = $about_us[0]['text'];
 
-$members = $helper->getMembersContent();
+$members = $helper->getMembersContent($lang);
 $consts['members'] = $members;
 
 $projectData = $helper->getProjectsContent($lang);
@@ -45,7 +50,7 @@ if(is_array($galleries) && !empty($galleries))
         $consts['galleries'][$key]['data'] = $value;
     }
 }
-// var_dump($consts); die;
+//var_dump($consts); die;
 require_once ROOT_PATH . 'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 

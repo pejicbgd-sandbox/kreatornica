@@ -5,12 +5,13 @@
 if(!defined('ROOT_PATH'))
 {
     define('ROOT_PATH', '/var/www/html/kreatornica/');
+    //define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+    //define('ROOT_PATH', '/home/kreatorn/public_html/');
 }
 
 require ROOT_PATH . "vendor/autoload.php";
-//require '/home/kreatorn/public_html/vendor/autoload.php/';
 
-$helper = new Helper();
+$helper = new Helper(ROOT_PATH);
 
 $pages = array('home-admin', 'about-admin', 'member-admin', 'project-admin', 'gallery-admin', 'contact-admin', 'footer-admin');
 $page = 'home-admin';
@@ -28,7 +29,7 @@ $twig->addExtension(new Twig_Extension_Debug());
 
 $info = [];
 $info = $helper->returnBulked('sr');
-//var_dump($info); die;
+//var_dump($info['galleries']); die;
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 

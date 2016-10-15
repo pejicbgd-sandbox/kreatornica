@@ -1,12 +1,13 @@
 <?php
 
-// define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
+//define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 define ('ROOT_PATH', '/var/www/html/kreatornica/');
-// define ('ROOT_PATH', '/home/kreatorn/public_html/');
+//define ('ROOT_PATH', '/home/kreatorn/public_html/');
+
 require ROOT_PATH . "vendor/autoload.php";
 
 $db = new DB();
-$helper = new Helper();
+$helper = new Helper(ROOT_PATH);
 
 if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
@@ -102,7 +103,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                 {
                     $filename = time() .'-' .$_FILES["image"]["name"];
 
-                    if(move_uploaded_file($_FILES["image"]["tmp_name"], 'C:/xampp/htdocs/kreatornica/assets/img/members/' .$filename))
+                    if(move_uploaded_file($_FILES["image"]["tmp_name"], '/home/kreatorn/public_html/assets/img/members/' .$filename))
                     {
                         $member_data['member_img'] = $filename;
                     }
@@ -168,8 +169,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             $data['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
             $data['text'] = filter_var($_POST['text'], FILTER_SANITIZE_STRING);
             $data['content'] = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+            $gallery_id = filter_var($_POST['project_gallery'], FILTER_SANITIZE_NUMBER_INT);
 
-            echo $helper->updateProjectData($project_id, $data['lang'], $data); die;
+            echo $helper->updateProjectData($project_id, $data['lang'], $data, $gallery_id); die;
         }
         elseif($action == 'saveNewProject')
         {

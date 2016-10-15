@@ -39,6 +39,21 @@
                     </select>
 
                     <input class="form-control input-lg m-bot15" type="text" name="title" placeholder="Izmeni naslov" id="project-title" value=""/>
+                
+                <div class="btn-group" data-toggle="buttons" id="project-gallery-list">
+                    <p class="col-lg-12">Izaberi galeriju: </p>
+
+                    {% for gallery in galleries.db %}
+                    <label class="btn btn-primary">
+                        <input type="radio" name="project_gallery" value="{{ gallery.gallery_id }}" autocomplete="off"> {{ gallery.gallery_name }}
+                    </label>
+                    {% endfor %}
+
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="project_gallery" value="0" autocomplete="off" checked> Nijedna
+                    </label>
+                    
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -55,20 +70,15 @@
                                     <div class="col-sm-10">
                                         <textarea class="form-control" name="text" rows="6" id="project-text"></textarea>
                                     </div>
-
-                                    <div style="float: left; margin-left: 2%; margin-top: -4%;">
-                                        <p style="margin-left: 3%;" class="help-block">Unesi naslovnu sliku projekta</p><br>
-                                        <input type="file" id="project-image" name="image">
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
-            <!--IZMENA SADRZAJA O PROJEKTU-->
+
+
             <div class="row">
-                <!-- CKEditor -->
                 <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
@@ -87,6 +97,26 @@
                     </section>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <article class="panel-heading">
+                            Naslovna slika projekta:
+                        </article>
+                        <div class="panel-body">
+                            <div id="project-image-wrapper" class="display-none">
+                                <div class="form-group" id="project-bilboard"></div>
+                                    <p>Izmeni</p>
+                                <label class="btn btn-default btn-file">
+                                    Browse <input type="file" id="project-image" name="image" style="display: none;">
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary" form="project-form" id="save-project">Pošalji</button>
             <button type="submit" class="btn btn-primary" form="project-form" id="add-project">Dodaj novi</button>
             <img class="loader display-none" src="{{ ROOT_PATH }}img/ajax-loader.gif" alt="Loading"/>

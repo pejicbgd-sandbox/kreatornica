@@ -7,7 +7,7 @@
 
         {% for project in projects %}
             <div class="col-md-4 col-sm-6 portfolio-item">
-                <a href="#projectModal1" class="portfolio-link" data-toggle="modal" data-project-id="{{ project.project_id }}" data-lang="{{ projects[0].lang }}">
+                <a href="#projectModal1" class="portfolio-link project-popup-link" data-toggle="modal" data-project-id="{{ project.project_id }}" data-lang="{{ projects[0].lang }}">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content">
                             <i class="fa fa-plus fa-3x"></i>
@@ -39,15 +39,20 @@
             </div>
             <div class="container">
                 <div class="row">
+                    
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
                             <h2 id="project-title"></h2>
                             <p class="item-intro text-muted project-subtitle"></p>
 
                             <p class="project-content"></p>
+                            
+                            <a class="fancybox-thumb" rel="fancybox-thumb" data-gallery="" href=""  id="project-review">
+                                <button type="button" class="btn btn-primary project-btn">Pogledajte kako nam je bilo na radionicama</button>
+                            </a> 
 
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Zatvori</button>
-
+                            <input type="hidden" class="project-gallery_id" value="" />
+                    
                         </div>
                     </div>
                 </div>
