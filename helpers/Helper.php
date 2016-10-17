@@ -482,4 +482,38 @@ class Helper
 
         return $db->getSelected();
     }
+
+    public function saveHomeData($link)
+    {
+        if($link) {
+            $data['video'] = $link;
+        }
+
+        $total = count($_FILES['home_image']['name']);
+        if($total > 0)
+        {
+            $path_parts = pathinfo($_FILES["home_image"]["name"]);
+
+            $extension = $path_parts['extension'];
+            $filesize = $_FILES['home_image']['size'];
+
+            if(in_array($extension, $valid_extensions) && $filesize < 10485760)
+            {
+                $folder_name = $this->_rootPath . 'assets/img/home';
+                if(!file_exists($folder_name))
+                {
+                    mkdir($folder_name, 0777);
+                }
+
+                @copy($_FILES['home_image']['tmp_name'], $folder_name.'/'.$_FILES['home_image']['name']);
+                $data['naslovna'] = $_FILES['home_image']['name'];
+            }
+        }
+
+        $db = new DB();
+        $db->update('home', data)
+            ->run();
+
+        return $db->getAffected();
+    }
 }
