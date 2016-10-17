@@ -228,6 +228,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             echo json_encode($helper->getMembersContent($lang)); die;
         }
+        elseif($action == 'setHomeData')
+        {
+            $link = filter_var($_POST['link'], FILTER_SANITIZE_STRING);
+
+            echo jsone_encode($helper->saveHomeData($link)); die;
+        }
     }
     else
     {

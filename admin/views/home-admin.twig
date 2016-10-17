@@ -23,7 +23,7 @@
 
                     <label class="control-label text-left col-lg-1" for="video-link" >Unesi video link: </label>
                     <div class="col-lg-11">
-                        <input class="form-control input-lg m-bot15" type="text" name="title" placeholder="Izmeni naslov" id="video-link" value="Unesi video link"/>
+                        <input class="form-control input-lg m-bot15" type="text" name="link" placeholder="Izmeni naslov" id="video-link" value="Unesi video link"/>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
 
             <button type="submit" class="btn btn-primary" form="home-form" id="save">Pošalji</button>
             <img class="loader display-none" src="{{ ROOT_PATH }}img/ajax-loader.gif" alt="Loading"/>
-            <input type="hidden" name="action" value=""/>
+            <input type="hidden" name="action" value="setHomeData"/>
         </form>
     </div>
 </section>
