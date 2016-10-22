@@ -4,16 +4,19 @@
 
     $('#home-form').on('submit', function(e) {
         e.preventDefault();
+
         if($('#home-image').val() !== '' || $('#video-link').val() !== '')
         {
+            $('.loader').show();
             $.ajax({
-            method: 'POST',
-            url: endPoint,
-            processData:false,
-            contentType: false,
-            data: new FormData(this),
+                method: 'POST',
+                url: endPoint,
+                processData:false,
+                contentType: false,
+                data: new FormData(this),
             }).done(function() {
-                //window.location.reload();
+                $('.loader').hide();
+                window.location.reload();
             });
         }
     });

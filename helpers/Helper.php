@@ -9,28 +9,6 @@ class Helper
         $this->_rootPath = $path;
     }
 
-    public function getActiveLanguage()
-    {
-        $lang = 'sr';
-        $allowed_langs = ['sk', 'en', 'sr'];
-
-        if(isset($_GET['lang']) && $_GET['lang'] !== '') {
-            $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
-
-            if(!in_array($lang, $allowed_langs))
-            {
-                $lang = 'sr';
-            }
-
-            $_SESSION['USER_DATA']['lang'] = $lang;
-        } else {
-            if(isset($_SESSION['USER_DATA']['lang']) && in_array($_SESSION['USER_DATA']['lang'], $allowed_langs)) {
-                $lang = $_SESSION['USER_DATA']['lang'];
-            }
-        }
-        return $lang;
-    }
-
     public function getHomeContent()
     {
         $db = new DB();

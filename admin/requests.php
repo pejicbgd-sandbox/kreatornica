@@ -1,12 +1,11 @@
 <?php
 
-define ('ROOT_PATH', '/var/www/html/kreatornica/');
-//define ('ROOT_PATH', '/home/kreatorn/public_html/');
+include ("../helpers/config.php");
 
-require ROOT_PATH . "vendor/autoload.php";
+require $config['ROOT_PATH'] . "vendor/autoload.php";
 
 $db = new DB();
-$helper = new Helper(ROOT_PATH);
+$helper = new Helper($config['ROOT_PATH']);
 
 if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
@@ -18,8 +17,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
             $lang = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
             $res = $helper->getAboutUsContent($lang);
 
-            echo json_encode($res[0]);
-            die;
+            echo json_encode($res[0]);  die;
         }
         elseif($action == 'getMemberInfo')
         {
@@ -31,8 +29,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
             }
 
             $results = $helper->getSingleMemberData($member_id, $lang);
-            echo json_encode($results);
-            die;
+            echo json_encode($results);  die;
         }
         elseif($action == 'getSingleGalleryData')
         {
