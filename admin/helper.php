@@ -5,7 +5,6 @@
 if(!defined('ROOT_PATH'))
 {
     define('ROOT_PATH', '/var/www/html/kreatornica/');
-    //define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
     //define('ROOT_PATH', '/home/kreatorn/public_html/');
 }
 
@@ -29,7 +28,8 @@ $twig->addExtension(new Twig_Extension_Debug());
 
 $info = [];
 $info = $helper->returnBulked('sr');
-//var_dump($info['galleries']); die;
+$info['ROOT_PATH'] = ROOT_PATH;
+//var_dump($info); die;
 
 require_once ROOT_PATH .'vendor/twig/twig/lib/Twig/Autoloader.php';
 
