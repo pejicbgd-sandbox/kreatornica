@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-    var endPoint = 'admin/requests.php';
+    var endPoint = 'requests.php';
 
     $('#home-form').on('submit', function(e) {
         e.preventDefault();
