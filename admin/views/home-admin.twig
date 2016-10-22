@@ -10,7 +10,7 @@
 
 <section class="panel">
     <div class="panel-body">
-        <form class="form-horizontal " method="post" action="" enctype="multipart/form-data"  name="home-form" id="home-form">
+        <form class="form-horizontal " method="post" action="requests.php" enctype="multipart/form-data"  name="home-form" id="home-form">
 
             <div class="row">
                 <div class="col-lg-12">
@@ -23,8 +23,13 @@
 
                     <label class="control-label text-left col-lg-1" for="video-link" >Unesi video link: </label>
                     <div class="col-lg-11">
-                        <input class="form-control input-lg m-bot15" type="text" name="link" placeholder="Izmeni naslov" id="video-link" value="Unesi video link"/>
+                        <input class="form-control input-lg m-bot15" type="text" name="link" placeholder="Unesi video link" id="video-link" value=""/>
+
+                        <div class="alert alert-info">
+                            <strong>Info!</strong> Link uneti u formatu "https://www.youtube.com/watch?v=c__uV-ZVhwc"
+                        </div>
                     </div>
+            
                 </div>
             </div>
 

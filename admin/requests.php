@@ -1,6 +1,5 @@
 <?php
 
-//define('ROOT_PATH', 'C:/xampp/htdocs/kreatornica/');
 define ('ROOT_PATH', '/var/www/html/kreatornica/');
 //define ('ROOT_PATH', '/home/kreatorn/public_html/');
 
@@ -230,9 +229,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         }
         elseif($action == 'setHomeData')
         {
-            $link = filter_var($_POST['link'], FILTER_SANITIZE_STRING);
+            $string = $_POST['link'];
+        
+            $start = strpos($string, 'v=');
+            $end = strpos($string, '&');
 
-            echo jsone_encode($helper->saveHomeData($link)); die;
+            if($end === false)
+            {
+                $link = substr($string, $start + 2);
+            }
+            else
+            {
+                $link = substr($string, $start + 2, $end - $start - 2);
+            }
+
+            echo json_encode($helper->saveHomeData($link)); die;
         }
     }
     else

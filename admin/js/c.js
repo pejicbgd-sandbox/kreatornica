@@ -1,6 +1,22 @@
 (function($) {
     "use strict";
-    var endPoint = 'admin/requests.php';
+    var endPoint = 'requests.php';
+
+    $('#home-form').on('submit', function(e) {
+        e.preventDefault();
+        if($('#home-image').val() !== '' || $('#video-link').val() !== '')
+        {
+            $.ajax({
+            method: 'POST',
+            url: endPoint,
+            processData:false,
+            contentType: false,
+            data: new FormData(this),
+            }).done(function() {
+                //window.location.reload();
+            });
+        }
+    });
 
     $('#save-about-us').on('click', function(e) {
         e.preventDefault();
