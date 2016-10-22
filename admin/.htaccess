@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Kreatornica Protected Area"
+AuthUserFile /home/kreatorn/public_html/admin/.htpasswd
+Require valid-user

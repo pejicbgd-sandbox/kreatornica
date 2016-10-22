@@ -11,9 +11,7 @@
     <meta name="keyword" content="Kreatornica">
 
     <title>Admin - Kreatornica</title>
-    <!-- bootstrap theme -->
-    <!--<link href="css/bootstrap-theme.css" rel="stylesheet">-->
-    <!-- Bootstrap styles -->
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- Generic page styles-->
     <link rel="stylesheet" href="css/adm-style.css">
@@ -123,6 +121,5 @@
     };
 </script>
 <script src="js/c.js"></script>
-<!--<script src="js/custom.js"></script>-->
 </body>
 </html>

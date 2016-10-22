@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-    var endPoint = 'requests.php';
+    var endPoint = 'admin/requests.php';
 
     $('#home-form').on('submit', function(e) {
         e.preventDefault();
@@ -10,7 +10,7 @@
             $('.loader').show();
             $.ajax({
                 method: 'POST',
-                url: endPoint,
+                url: "requests.php",
                 processData:false,
                 contentType: false,
                 data: new FormData(this),
